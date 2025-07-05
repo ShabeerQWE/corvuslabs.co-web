@@ -10,42 +10,29 @@ interface MenuItemProps {
   disabled?: boolean
   icon?: React.ReactNode
   isActive?: boolean
-  label?: string
-  isExpanded?: boolean
 }
 
-export function MenuItem({ children, onClick, disabled = false, icon, isActive = false, label, isExpanded = false }: MenuItemProps) {
+export function MenuItem({ children, onClick, disabled = false, icon, isActive = false }: MenuItemProps) {
   return (
-    <div className="relative">
-      <button
-        className={`relative block w-full h-16 text-center group rounded-full
-          ${disabled ? "text-gray-400 cursor-not-allowed" : "text-white"}
-          ${isActive ? "bg-gray-800/50" : ""}
-          hover:scale-105 transition-all duration-200 ease-out
-        `}
-        role="menuitem"
-        onClick={onClick}
-        disabled={disabled}
-      >
-        <span className="flex items-center justify-center h-full">
-          {icon && (
-            <span className="h-6 w-6 transition-all duration-200 group-hover:[&_svg]:stroke-[2.5] group-hover:scale-110">
-              {icon}
-            </span>
-          )}
-          {children}
-        </span>
-      </button>
-      
-      {/* Label that appears to the left when expanded */}
-      {label && isExpanded && (
-        <div className="absolute right-20 top-1/2 -translate-y-1/2 px-3 py-2 bg-gray-800/80 backdrop-blur-md border border-gray-600/40 rounded-lg shadow-lg transition-all duration-300 ease-out opacity-100 scale-100">
-          <span className="text-white text-sm font-medium whitespace-nowrap">
-            {label}
+    <button
+      className={`relative block w-full h-16 text-center group rounded-full
+        ${disabled ? "text-gray-400 cursor-not-allowed" : "text-white"}
+        ${isActive ? "bg-gray-800/50" : ""}
+        hover:scale-105 transition-all duration-200 ease-out
+      `}
+      role="menuitem"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <span className="flex items-center justify-center h-full">
+        {icon && (
+          <span className="h-6 w-6 transition-all duration-200 group-hover:[&_svg]:stroke-[2.5] group-hover:scale-110">
+            {icon}
           </span>
-        </div>
-      )}
-    </div>
+        )}
+        {children}
+      </span>
+    </button>
   )
 }
 

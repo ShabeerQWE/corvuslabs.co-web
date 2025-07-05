@@ -26,9 +26,9 @@ const App: React.FC = () => {
   const menuItems = [
     { label: 'Home', href: '#home' },
     { label: 'Services', href: '#services' },
-    { label: 'About', href: '#about' },
+    { label: 'About us', href: '#about' },
     { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Contact Us', href: '#contact' },
   ];
 
   return (

@@ -77,28 +77,40 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
           {items.map((item, index) => (
             <div 
               key={item.href}
-              className="absolute top-0 left-0 w-16 h-16 bg-gray-800/60 backdrop-blur-md border border-gray-600/40 shadow-lg will-change-transform rounded-full hover:bg-gray-800/70 transition-all duration-200"
+              className="absolute top-0 left-0 will-change-transform"
               style={{
                 transform: `translateY(${isExpanded ? (index + 1) * 72 : 0}px)`,
                 opacity: isExpanded ? 1 : 0,
                 zIndex: 40 - index,
-                clipPath: index === items.length - 1 
-                  ? "circle(50% at 50% 50%)" 
-                  : "circle(50% at 50% 55%)",
                 transition: `transform ${isExpanded ? '300ms' : '300ms'} cubic-bezier(0.4, 0, 0.2, 1),
-                           opacity ${isExpanded ? '300ms' : '350ms'},
-                           background-color 200ms ease`,
+                           opacity ${isExpanded ? '300ms' : '350ms'}`,
                 backfaceVisibility: 'hidden',
                 perspective: 1000,
                 WebkitFontSmoothing: 'antialiased'
               }}
             >
-              <MenuItem 
-                icon={getIcon(item.label)}
-                label={item.label}
-                isExpanded={isExpanded}
-                onClick={() => handleItemClick(item.href)}
-              />
+              {/* Sphere */}
+              <div className="w-16 h-16 bg-gray-800/60 backdrop-blur-md border border-gray-600/40 shadow-lg rounded-full hover:bg-gray-800/70 transition-all duration-200"
+                   style={{
+                     clipPath: index === items.length - 1 
+                       ? "circle(50% at 50% 50%)" 
+                       : "circle(50% at 50% 55%)"
+                   }}
+              >
+                <MenuItem 
+                  icon={getIcon(item.label)}
+                  onClick={() => handleItemClick(item.href)}
+                />
+              </div>
+              
+              {/* Label positioned outside the sphere */}
+              {isExpanded && (
+                <div className="absolute right-[72px] top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-800/90 backdrop-blur-md border border-gray-600/40 rounded-lg shadow-lg z-50">
+                  <span className="text-white text-sm font-medium whitespace-nowrap">
+                    {item.label}
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </div>
