@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Menu as MenuIcon, X, Home, Briefcase, Users, User, MessageCircle } from 'lucide-react';
+import { Menu as MenuIcon, X, Home, Settings, Users, Star, Phone } from 'lucide-react';
 import { MenuItem, MenuContainer } from "./fluid-menu";
 
 interface FluidNavMenuProps {
@@ -34,13 +34,13 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
       case 'home':
         return <Home size={20} strokeWidth={1.5} className={iconClass} />;
       case 'services':
-        return <Briefcase size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'about':
+        return <Settings size={20} strokeWidth={1.5} className={iconClass} />;
+      case 'about us':
         return <Users size={20} strokeWidth={1.5} className={iconClass} />;
       case 'testimonials':
-        return <User size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'contact':
-        return <MessageCircle size={20} strokeWidth={1.5} className={iconClass} />;
+        return <Star size={20} strokeWidth={1.5} className={iconClass} />;
+      case 'contact us':
+        return <Phone size={20} strokeWidth={1.5} className={iconClass} />;
       default:
         return <Home size={20} strokeWidth={1.5} className={iconClass} />;
     }
@@ -105,11 +105,14 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
               
               {/* Label positioned outside the sphere */}
               {isExpanded && (
-                <div className="absolute right-[72px] top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-800/90 backdrop-blur-md border border-gray-600/40 rounded-lg shadow-lg z-50">
+                <button 
+                  onClick={() => handleItemClick(item.href)}
+                  className="absolute right-[72px] top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-800/90 backdrop-blur-md border border-gray-600/40 rounded-lg shadow-lg z-50 hover:bg-gray-800/95 transition-all duration-200 cursor-pointer"
+                >
                   <span className="text-white text-sm font-medium whitespace-nowrap">
                     {item.label}
                   </span>
-                </div>
+                </button>
               )}
             </div>
           ))}
