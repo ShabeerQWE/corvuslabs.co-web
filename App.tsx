@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedNav from './components/AnimatedNav';
+import FluidNavMenu from './components/ui/fluid-nav-menu';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import About from './components/About';
@@ -22,9 +23,18 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const menuItems = [
+    { label: 'Home', href: '#home' },
+    { label: 'Services', href: '#services' },
+    { label: 'About', href: '#about' },
+    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
       <AnimatedNav isScrolled={isScrolled} />
+      <FluidNavMenu items={menuItems} />
       <Hero />
       <Services />
       <About />

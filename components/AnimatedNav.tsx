@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
+import FluidNavMenu from './ui/fluid-nav-menu';
 
 interface AnimatedNavProps {
   isScrolled: boolean;
@@ -16,7 +17,6 @@ const navigationItems = [
 ];
 
 const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
@@ -40,10 +40,7 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const closeMenu = () => setIsMenuOpen(false);
-
   const handleNavClick = (href: string) => {
-    closeMenu();
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -125,87 +122,16 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="md:hidden"
         >
-          <motion.button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-gray-700 hover:text-black transition-colors duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle menu"
-          >
-            <AnimatePresence mode="wait">
-              {isMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X size={24} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu size={24} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+          <FluidNavMenu 
+            items={navigationItems.map(item => ({ 
+              label: item.name, 
+              href: item.href,
+              icon: null // Icons are handled internally
+            }))}
+            onItemClick={handleNavClick}
+          />
         </motion.div>
       </div>
-
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden bg-white/95 backdrop-blur-md shadow-lg border-t border-gray-200"
-          >
-            <div className="container mx-auto px-6 py-4">
-              {navigationItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.2, delay: index * 0.05 }}
-                  className={cn(
-                    'block py-3 text-lg font-medium transition-colors duration-300 cursor-pointer border-b border-gray-100 last:border-b-0',
-                    activeSection === item.href.substring(1)
-                      ? 'text-black'
-                      : 'text-gray-700 hover:text-black'
-                  )}
-                  whileHover={{ x: 10 }}
-                >
-                  <div className="flex items-center justify-between">
-                    {item.name}
-                    <ChevronDown
-                      size={16}
-                      className={cn(
-                        'transform transition-transform duration-200',
-                        activeSection === item.href.substring(1) ? 'rotate-180' : ''
-                      )}
-                    />
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
   );
 };
