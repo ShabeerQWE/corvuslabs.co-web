@@ -95,7 +95,7 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
                 className={cn(
                   'relative px-4 py-2 text-sm font-medium transition-colors duration-300 cursor-pointer rounded-full',
                   activeSection === item.href.substring(1)
-                    ? 'text-black'
+                    ? (isScrolled ? 'text-white font-semibold' : 'text-black')
                     : 'text-gray-700 hover:text-black'
                 )}
                 whileHover={{ scale: 1.05 }}
@@ -105,7 +105,10 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
                 {activeSection === item.href.substring(1) && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-gray-100 rounded-full -z-10"
+                    className={cn(
+                      "absolute inset-0 rounded-full -z-10",
+                      isScrolled ? "bg-gray-900 shadow-sm" : "bg-gray-100"
+                    )}
                     initial={false}
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
