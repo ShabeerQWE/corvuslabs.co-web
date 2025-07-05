@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
+import AnimatedNav from './components/AnimatedNav';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import About from './components/About';
@@ -9,10 +9,10 @@ import Clients from './components/Clients';
 import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import BackToTopButton from './components/BackToTopButton';
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,11 +22,9 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
-      <Header isScrolled={isScrolled} isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} setIsMenuOpen={setIsMenuOpen} />
+      <AnimatedNav isScrolled={isScrolled} />
       <Hero />
       <Services />
       <About />
@@ -36,14 +34,7 @@ const App: React.FC = () => {
       <CTA />
       <Contact />
       <Footer />
-      {/* Back to Top Button */}
-      <a 
-        href="#home" 
-        className="fixed bottom-8 right-8 bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap"
-        aria-label="Back to top"
-      >
-        <i className="fas fa-arrow-up"></i>
-      </a>
+      <BackToTopButton />
     </div>
   );
 };
