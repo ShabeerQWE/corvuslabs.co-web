@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Card, CardContent } from "./ui/card";
+import { GlowingInput } from "./ui/glowing-input";
+import { GlowingTextarea } from "./ui/glowing-textarea";
+import { GlowingButton } from "./ui/glowing-button";
+import { Label } from "./ui/label";
+import { LabelInputContainer } from "./ui/label-input-container";
 
 const Contact: React.FC = () => (
   <section id="contact" className="py-20 bg-white">
@@ -61,46 +63,42 @@ const Contact: React.FC = () => (
               <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                    <Input 
+                  <LabelInputContainer>
+                    <Label htmlFor="name">Full Name</Label>
+                    <GlowingInput 
                       id="name" 
                       type="text" 
                       placeholder="John Doe" 
-                      className="w-full border-gray-300 focus:border-black focus:ring-black text-sm"
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                    <Input 
+                  </LabelInputContainer>
+                  <LabelInputContainer>
+                    <Label htmlFor="email">Email Address</Label>
+                    <GlowingInput 
                       id="email" 
                       type="email" 
                       placeholder="john@example.com" 
-                      className="w-full border-gray-300 focus:border-black focus:ring-black text-sm"
                     />
-                  </div>
+                  </LabelInputContainer>
                 </div>
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                  <Input 
+                <LabelInputContainer>
+                  <Label htmlFor="subject">Subject</Label>
+                  <GlowingInput 
                     id="subject" 
                     type="text" 
                     placeholder="How can we help you?" 
-                    className="w-full border-gray-300 focus:border-black focus:ring-black text-sm"
                   />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <Textarea 
+                </LabelInputContainer>
+                <LabelInputContainer>
+                  <Label htmlFor="message">Message</Label>
+                  <GlowingTextarea 
                     id="message" 
                     placeholder="Tell us about your project or inquiry..." 
                     rows={5}
-                    className="w-full border-gray-300 focus:border-black focus:ring-black text-sm resize-none"
                   />
-                </div>
-                <Button className="w-full bg-black hover:bg-gray-800 text-white py-6 text-lg !rounded-button whitespace-nowrap">
-                  Send Message
-                </Button>
+                </LabelInputContainer>
+                <GlowingButton type="submit" className="text-lg">
+                  Send Message →
+                </GlowingButton>
               </form>
             </CardContent>
           </Card>
