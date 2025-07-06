@@ -165,9 +165,8 @@ const ContactForm: React.FC = React.memo(() => {
             </div>
             
             {/* Desktop Globe (reference design) */}
-            <div className="hidden lg:flex relative size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-background shadow-xl px-20 pb-6 pt-4 h-[320px]">
+            <div className="hidden lg:flex relative size-full max-w-lg items-center justify-center overflow-hidden px-20 pb-6 pt-4 h-[320px]">
               <Globe className="top-4" />
-              <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
             </div>
           </div>
         </div>
