@@ -157,11 +157,10 @@ const ContactForm: React.FC = React.memo(() => {
           </div>
           <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
             {/* Mobile Globe (unchanged) */}
-            <div className="relative flex items-center justify-center overflow-hidden rounded-lg border bg-background shadow-xl h-80 sm:h-96 w-full lg:hidden">
+            <div className="relative flex items-center justify-center overflow-hidden h-80 sm:h-96 w-full lg:hidden">
               <div className="relative w-full h-full">
                 <Globe className="" />
               </div>
-              <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
             </div>
             
             {/* Desktop Globe (reference design) */}
