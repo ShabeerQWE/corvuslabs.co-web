@@ -13,6 +13,7 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
     "clsx": "^2.1.1",
+    "cobe": "^0.6.4",
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
     "dotted-map": "^2.2.3",
