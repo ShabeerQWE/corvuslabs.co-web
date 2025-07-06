@@ -144,16 +144,16 @@ const ContactForm: React.FC = React.memo(() => {
       )}
       
       {/* Two Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {/* Left Column - World Map */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4 order-2 lg:order-1">
           <div className="text-center lg:text-left">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Global Reach</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Global Reach</h3>
             <p className="text-gray-600 text-sm">
               We work with clients worldwide, delivering solutions across continents and time zones.
             </p>
           </div>
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
             <WorldMap 
               dots={worldMapDots}
               lineColor="#3b82f6"
@@ -162,9 +162,9 @@ const ContactForm: React.FC = React.memo(() => {
         </div>
 
         {/* Right Column - Contact Form */}
-        <div>
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="order-1 lg:order-2">
+          <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               <LabelInputContainer>
                 <Label htmlFor="name">Full Name</Label>
                 <GlowingInput 
