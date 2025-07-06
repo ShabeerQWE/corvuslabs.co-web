@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
@@ -15,22 +15,11 @@ export const AnimatedModal: React.FC<AnimatedModalProps> = ({
   children,
 }) => {
   const [open, setOpen] = useState(false);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const [triggerRect, setTriggerRect] = useState<DOMRect | null>(null);
-
-  const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen && triggerRef.current) {
-      // Store the trigger button's position when opening
-      setTriggerRect(triggerRef.current.getBoundingClientRect());
-    }
-    setOpen(isOpen);
-  };
 
   return (
-    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <button
-          ref={triggerRef}
           type="button"
           className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
         >
@@ -39,7 +28,7 @@ export const AnimatedModal: React.FC<AnimatedModalProps> = ({
       </Dialog.Trigger>
 
       <AnimatePresence>
-        {open && triggerRect && (
+        {open && (
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild>
               <motion.div
@@ -58,45 +47,27 @@ export const AnimatedModal: React.FC<AnimatedModalProps> = ({
                 onClick={(e) => e.stopPropagation()}
               >
                 <motion.div
-                  className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-auto p-6 max-h-[90vh] overflow-y-auto"
+                  className="bg-white rounded-lg shadow-xl w-full max-w-6xl mx-auto p-6 max-h-[90vh] overflow-y-auto"
                   initial={{
                     opacity: 0,
-                    scale: 0.5,
-                    x:
-                      triggerRect.left +
-                      triggerRect.width / 2 -
-                      window.innerWidth / 2,
-                    y:
-                      triggerRect.top +
-                      triggerRect.height / 2 -
-                      window.innerHeight / 2,
-                    rotateX: 15,
+                    scale: 0.8,
+                    y: 50,
                   }}
                   animate={{
                     opacity: 1,
                     scale: 1,
-                    x: 0,
                     y: 0,
-                    rotateX: 0,
                   }}
                   exit={{
                     opacity: 0,
-                    scale: 0.5,
-                    x:
-                      triggerRect.left +
-                      triggerRect.width / 2 -
-                      window.innerWidth / 2,
-                    y:
-                      triggerRect.top +
-                      triggerRect.height / 2 -
-                      window.innerHeight / 2,
-                    rotateX: -15,
+                    scale: 0.8,
+                    y: 50,
                   }}
                   transition={{
                     type: 'spring',
-                    damping: 25,
-                    stiffness: 300,
-                    duration: 0.25,
+                    damping: 30,
+                    stiffness: 400,
+                    duration: 0.15,
                   }}
                   onClick={(e) => e.stopPropagation()}
                 >

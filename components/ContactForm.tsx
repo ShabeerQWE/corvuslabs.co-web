@@ -5,6 +5,7 @@ import { GlowingTextarea } from "./ui/glowing-textarea";
 import { GlowingButton } from "./ui/glowing-button";
 import { Label } from "./ui/label";
 import { LabelInputContainer } from "./ui/label-input-container";
+import { WorldMap } from "./ui/world-map";
 
 interface FormData {
   name: string;
@@ -97,6 +98,25 @@ const ContactForm: React.FC = () => {
     }
   };
 
+  const worldMapDots = [
+    {
+      start: { lat: 40.7128, lng: -74.0060 }, // New York
+      end: { lat: 51.5074, lng: -0.1278 }, // London
+    },
+    {
+      start: { lat: 37.7749, lng: -122.4194 }, // San Francisco
+      end: { lat: 35.6762, lng: 139.6503 }, // Tokyo
+    },
+    {
+      start: { lat: 52.5200, lng: 13.4050 }, // Berlin
+      end: { lat: -33.8688, lng: 151.2093 }, // Sydney
+    },
+    {
+      start: { lat: 28.6139, lng: 77.2090 }, // New Delhi
+      end: { lat: -1.2921, lng: 36.8219 }, // Nairobi
+    },
+  ];
+
   return (
     <div className="w-full">
       {/* Success Message */}
@@ -123,65 +143,87 @@ const ContactForm: React.FC = () => {
         </motion.div>
       )}
       
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <LabelInputContainer>
-            <Label htmlFor="name">Full Name</Label>
-            <GlowingInput 
-              id="name"
-              name="name"
-              type="text" 
-              placeholder="John Doe"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left Column - World Map */}
+        <div className="space-y-4">
+          <div className="text-center lg:text-left">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Global Reach</h3>
+            <p className="text-gray-600 text-sm">
+              We work with clients worldwide, delivering solutions across continents and time zones.
+            </p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <WorldMap 
+              dots={worldMapDots}
+              lineColor="#3b82f6"
             />
-          </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="email">Email Address</Label>
-            <GlowingInput 
-              id="email"
-              name="email"
-              type="email" 
-              placeholder="john@example.com"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </LabelInputContainer>
+          </div>
         </div>
-        <LabelInputContainer>
-          <Label htmlFor="subject">Subject</Label>
-          <GlowingInput 
-            id="subject"
-            name="subject"
-            type="text" 
-            placeholder="How can we help you?"
-            value={formData.subject}
-            onChange={handleInputChange}
-            required
-          />
-        </LabelInputContainer>
-        <LabelInputContainer>
-          <Label htmlFor="message">Message</Label>
-          <GlowingTextarea 
-            id="message"
-            name="message"
-            placeholder="Tell us about your project or inquiry..." 
-            rows={5}
-            value={formData.message}
-            onChange={handleInputChange}
-            required
-          />
-        </LabelInputContainer>
-        <GlowingButton 
-          type="submit" 
-          className="text-lg w-full" 
-          disabled={status.isSubmitting}
-        >
-          {status.isSubmitting ? 'Sending...' : 'Send Message →'}
-        </GlowingButton>
-      </form>
+
+        {/* Right Column - Contact Form */}
+        <div>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <LabelInputContainer>
+                <Label htmlFor="name">Full Name</Label>
+                <GlowingInput 
+                  id="name"
+                  name="name"
+                  type="text" 
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="email">Email Address</Label>
+                <GlowingInput 
+                  id="email"
+                  name="email"
+                  type="email" 
+                  placeholder="john@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </LabelInputContainer>
+            </div>
+            <LabelInputContainer>
+              <Label htmlFor="subject">Subject</Label>
+              <GlowingInput 
+                id="subject"
+                name="subject"
+                type="text" 
+                placeholder="How can we help you?"
+                value={formData.subject}
+                onChange={handleInputChange}
+                required
+              />
+            </LabelInputContainer>
+            <LabelInputContainer>
+              <Label htmlFor="message">Message</Label>
+              <GlowingTextarea 
+                id="message"
+                name="message"
+                placeholder="Tell us about your project or inquiry..." 
+                rows={5}
+                value={formData.message}
+                onChange={handleInputChange}
+                required
+              />
+            </LabelInputContainer>
+            <GlowingButton 
+              type="submit" 
+              className="text-lg w-full" 
+              disabled={status.isSubmitting}
+            >
+              {status.isSubmitting ? 'Sending...' : 'Send Message →'}
+            </GlowingButton>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
