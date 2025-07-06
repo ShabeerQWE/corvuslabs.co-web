@@ -11,8 +11,16 @@ interface FluidNavMenuProps {
 
 export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   
-  // Force close menu on outside clicks (mobile)
+  // Delay visibility to prevent jump
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 150); // Slightly longer delay to ensure page is loaded
+    
+    return () => clearTimeout(timer);
+  }, []);
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -70,7 +78,16 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
   };
 
   return (
-    <div className="md:hidden fixed top-4 right-6 z-50" data-nav-menu>
+    <div 
+      className="md:hidden fixed top-4 right-6 z-50" 
+      data-nav-menu
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(-10px)',
+        transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+        pointerEvents: isVisible ? 'auto' : 'none'
+      }}
+    >
       {/* Background blur effect */}
       <div className="absolute inset-0 -m-4 bg-gradient-to-b from-black/5 to-transparent blur-xl rounded-full opacity-50" />
       
