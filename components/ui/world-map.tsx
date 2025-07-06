@@ -17,18 +17,29 @@ export const WorldMap = React.memo(({
   lineColor = "#0ea5e9",
 }: MapProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // Default to mobile for safety
 
-  // Detect mobile device
+  // Detect mobile device with more aggressive detection
   useEffect(() => {
     const checkMobile = () => {
+      // Check user agent
       const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
       const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
-      const isSmallScreen = window.innerWidth < 768; // Less than md breakpoint
-      setIsMobile(isMobileDevice || isSmallScreen);
+      
+      // Check screen size (more aggressive threshold)
+      const isSmallScreen = window.innerWidth <= 1024; // Tablet and mobile
+      
+      // Check touch capability
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      // If any of these conditions are true, treat as mobile
+      const shouldTreatAsMobile = isMobileDevice || isSmallScreen || isTouchDevice;
+      
+      setIsMobile(shouldTreatAsMobile);
     };
 
-    checkMobile();
+    // Initial check with delay to ensure DOM is ready
+    setTimeout(checkMobile, 100);
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -80,6 +91,27 @@ export const WorldMap = React.memo(({
         viewBox="0 0 800 400"
         className="w-full h-full absolute inset-0 pointer-events-none select-none"
       >
+        {/* Force disable animations on mobile screens via CSS */}
+        <style>
+          {`
+            @media (max-width: 1024px) {
+              .world-map-animation {
+                animation: none !important;
+                transition: none !important;
+              }
+              .world-map-animation path {
+                stroke-dasharray: none !important;
+                stroke-dashoffset: 0 !important;
+                animation: none !important;
+              }
+              .world-map-animation circle {
+                animation: none !important;
+              }
+            }
+          `}
+        </style>
+        
+        <g className="world-map-animation">
         {projectedDots.map(({ startPoint, endPoint }, i) => (
           <g key={`path-group-${i}`}>
             {isMobile ? (
@@ -198,6 +230,7 @@ export const WorldMap = React.memo(({
             </g>
           </g>
         ))}
+        </g>
       </svg>
     </div>
   );

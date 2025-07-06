@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GlowingInput } from "./ui/glowing-input";
 import { GlowingTextarea } from "./ui/glowing-textarea";
@@ -33,6 +33,27 @@ const ContactForm: React.FC = React.memo(() => {
     success: false,
     error: ''
   });
+
+  // Mobile detection state
+  const [isMobile, setIsMobile] = useState(true); // Default to mobile for safety
+  
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+      const isSmallScreen = window.innerWidth < 1024; // Below lg breakpoint
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      const shouldTreatAsMobile = isMobileDevice || isSmallScreen || isTouchDevice;
+      
+      setIsMobile(shouldTreatAsMobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -154,10 +175,21 @@ const ContactForm: React.FC = React.memo(() => {
             </p>
           </div>
           <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-            <WorldMap 
-              dots={worldMapDots}
-              lineColor="#3b82f6"
-            />
+            {/* Conditionally render world map based on mobile detection */}
+            {!isMobile ? (
+              <WorldMap 
+                dots={worldMapDots}
+                lineColor="#3b82f6"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-48 text-gray-500">
+                <div className="text-center">
+                  <div className="text-2xl mb-2">🌍</div>
+                  <p className="text-sm">Global Connectivity</p>
+                  <p className="text-xs">Serving clients worldwide</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

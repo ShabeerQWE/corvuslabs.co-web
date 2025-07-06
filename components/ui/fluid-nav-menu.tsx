@@ -12,16 +12,39 @@ interface FluidNavMenuProps {
 export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  const handleItemClick = (href: string) => {
-    if (onItemClick) {
-      onItemClick(href);
-    } else {
-      // Default behavior: scroll to section
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+  // Force close menu on outside clicks (mobile)
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const menuContainer = target.closest('[data-nav-menu]');
+      
+      if (!menuContainer && isExpanded) {
+        setIsExpanded(false);
       }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('click', handleClickOutside, true);
+      return () => document.removeEventListener('click', handleClickOutside, true);
     }
+  }, [isExpanded]);
+  
+  const handleItemClick = (href: string) => {
+    // Always close the menu when an item is clicked (important for mobile)
+    setIsExpanded(false);
+    
+    // Add a small delay to ensure the menu closes visually before navigation
+    setTimeout(() => {
+      if (onItemClick) {
+        onItemClick(href);
+      } else {
+        // Default behavior: scroll to section
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, 100);
   };
 
   const handleToggle = () => {
@@ -47,7 +70,7 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
   };
 
   return (
-    <div className="md:hidden fixed top-4 right-6 z-50">
+    <div className="md:hidden fixed top-4 right-6 z-50" data-nav-menu>
       {/* Background blur effect */}
       <div className="absolute inset-0 -m-4 bg-gradient-to-b from-black/5 to-transparent blur-xl rounded-full opacity-50" />
       

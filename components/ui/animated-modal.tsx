@@ -16,59 +16,48 @@ export const AnimatedModal: React.FC<AnimatedModalProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  // Simple mobile back button handling
+  // Handle mobile back button with proper history management
   useEffect(() => {
     if (!open) return;
 
-    let modalHistoryAdded = false;
+    let hasAddedHistoryEntry = false;
 
-    // Add history entry for modal
-    if (typeof window !== 'undefined') {
-      // Push a hash change to history
-      const currentUrl = window.location.href;
-      if (!currentUrl.includes('#modal')) {
-        window.history.pushState({ modal: true }, '', currentUrl + '#modal');
-        modalHistoryAdded = true;
+    // Add a history entry when modal opens
+    const addHistoryEntry = () => {
+      if (!hasAddedHistoryEntry) {
+        window.history.pushState({ modalOpen: true, timestamp: Date.now() }, '');
+        hasAddedHistoryEntry = true;
       }
+    };
 
-      // Handle back button
-      const handlePopState = () => {
-        if (open && modalHistoryAdded) {
-          setOpen(false);
-        }
-      };
+    // Handle back button
+    const handlePopState = (event: PopStateEvent) => {
+      // If modal is open and user pressed back, close the modal
+      if (open) {
+        event.preventDefault();
+        setOpen(false);
+        // Don't go back in history, just close the modal
+        return false;
+      }
+    };
 
-      // Handle escape key
-      const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          setOpen(false);
-        }
-      };
+    // Add history entry after a small delay to ensure modal is fully rendered
+    setTimeout(addHistoryEntry, 50);
+    
+    window.addEventListener('popstate', handlePopState);
 
-      window.addEventListener('popstate', handlePopState);
-      window.addEventListener('keydown', handleEscape);
-
-      return () => {
-        window.removeEventListener('popstate', handlePopState);
-        window.removeEventListener('keydown', handleEscape);
-        
-        // Clean up history if modal is being unmounted
-        if (modalHistoryAdded && window.location.hash === '#modal') {
-          window.history.back();
-        }
-      };
-    }
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      
+      // Clean up history entry when modal closes
+      if (hasAddedHistoryEntry && window.history.state?.modalOpen) {
+        window.history.back();
+      }
+    };
   }, [open]);
 
   const handleOpenChange = (isOpen: boolean) => {
     setOpen(isOpen);
-    
-    // When closing, remove hash if present
-    if (!isOpen && window.location.hash === '#modal') {
-      // Replace current state to remove the hash
-      const urlWithoutHash = window.location.href.replace('#modal', '');
-      window.history.replaceState(null, '', urlWithoutHash);
-    }
   };
 
   return (
