@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AnimatedNav from './components/AnimatedNav';
 import FluidNavMenu from './components/ui/fluid-nav-menu';
 import Hero from './components/Hero';
+import LogoMarquee from './components/LogoMarquee';
 import Services from './components/Services';
 import About from './components/About';
 import Stats from './components/Stats';
@@ -36,6 +37,7 @@ const App: React.FC = () => {
       <AnimatedNav isScrolled={isScrolled} />
       <FluidNavMenu items={menuItems} />
       <Hero />
+      <LogoMarquee />
       <Services />
       <About />
       <Stats />
