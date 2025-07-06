@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { GlowingInput } from "./ui/glowing-input";
 import { GlowingTextarea } from "./ui/glowing-textarea";
@@ -20,7 +20,7 @@ interface FormStatus {
   error: string;
 }
 
-const ContactForm: React.FC = () => {
+const ContactForm: React.FC = React.memo(() => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -34,7 +34,7 @@ const ContactForm: React.FC = () => {
     error: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -45,7 +45,7 @@ const ContactForm: React.FC = () => {
     if (status.error) {
       setStatus(prev => ({ ...prev, error: '' }));
     }
-  };
+  }, [status.error]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ const ContactForm: React.FC = () => {
     }
   };
 
-  const worldMapDots = [
+  const worldMapDots = React.useMemo(() => [
     {
       start: { lat: 40.7128, lng: -74.0060 }, // New York
       end: { lat: 51.5074, lng: -0.1278 }, // London
@@ -115,7 +115,7 @@ const ContactForm: React.FC = () => {
       start: { lat: 28.6139, lng: 77.2090 }, // New Delhi
       end: { lat: -1.2921, lng: 36.8219 }, // Nairobi
     },
-  ];
+  ], []);
 
   return (
     <div className="w-full">
@@ -226,6 +226,8 @@ const ContactForm: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+ContactForm.displayName = "ContactForm";
 
 export default ContactForm;

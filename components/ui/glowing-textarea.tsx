@@ -1,50 +1,34 @@
 import * as React from "react";
 import { cn } from "../../lib/utils";
-import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const GlowingTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
-    const radius = 100; // radius of the hover effect
-    const [visible, setVisible] = React.useState(false);
+    const [isFocused, setIsFocused] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
 
-    let mouseX = useMotionValue(0);
-    let mouseY = useMotionValue(0);
-
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-      let { left, top } = currentTarget.getBoundingClientRect();
-
-      mouseX.set(clientX - left);
-      mouseY.set(clientY - top);
-    }
-    
     return (
-      <motion.div
-        style={{
-          background: useMotionTemplate`
-        radial-gradient(
-          ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
-          #374151,
-          transparent 80%
-        )
-      `,
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setVisible(true)}
-        onMouseLeave={() => setVisible(false)}
-        className="group/input rounded-lg p-[2px] transition duration-300"
+      <div
+        className={cn(
+          "group/input rounded-lg p-[2px] transition-all duration-300",
+          (isFocused || isHovered) && "bg-gradient-to-r from-gray-300 to-gray-400"
+        )}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <textarea
           className={cn(
-            `flex min-h-[120px] w-full rounded-md border-none bg-gray-50 px-3 py-2 text-sm text-black transition duration-400 group-hover/input:shadow-none placeholder:text-neutral-400 focus-visible:ring-[2px] focus-visible:ring-neutral-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-[0px_0px_1px_1px_#e5e7eb] resize-none`,
+            `flex min-h-[120px] w-full rounded-md border-none bg-gray-50 px-3 py-2 text-sm text-black transition duration-300 placeholder:text-neutral-400 focus-visible:ring-[2px] focus-visible:ring-neutral-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 shadow-[0px_0px_1px_1px_#e5e7eb] resize-none`,
             className,
           )}
           ref={ref}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           {...props}
         />
-      </motion.div>
+      </div>
     );
   },
 );
