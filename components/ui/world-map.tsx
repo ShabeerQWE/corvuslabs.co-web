@@ -18,6 +18,7 @@ export const WorldMap = React.memo(({
 }: MapProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [isMobile, setIsMobile] = useState(true); // Default to mobile for safety
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Detect mobile device with more aggressive detection
   useEffect(() => {
@@ -44,8 +45,17 @@ export const WorldMap = React.memo(({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
-  // Memoize expensive calculations
+  // Memoize expensive calculations with loading state
   const { svgMap, projectedDots } = useMemo(() => {
+    // Defer heavy calculations slightly to allow UI to render first
+    if (!isLoaded) {
+      // Return lightweight placeholder data first
+      return { 
+        svgMap: '<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="white"/></svg>', 
+        projectedDots: [] 
+      };
+    }
+
     const map = new DottedMap({ height: 100, grid: "diagonal" });
     const svg = map.getSVG({
       radius: 0.22,
@@ -66,7 +76,16 @@ export const WorldMap = React.memo(({
     }));
 
     return { svgMap: svg, projectedDots: projected };
-  }, [dots]);
+  }, [dots, isLoaded]);
+
+  // Load the map after component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100); // Small delay to let modal render first
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const createCurvedPath = (
     start: { x: number; y: number },
@@ -79,9 +98,19 @@ export const WorldMap = React.memo(({
 
   return (
     <div className="w-full aspect-[2/1] bg-white rounded-lg relative font-sans">
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 rounded-lg">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+            <p className="text-sm text-gray-500">Loading world map...</p>
+          </div>
+        </div>
+      )}
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none"
+        className={`h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none transition-opacity duration-300 ${
+          isLoaded ? 'opacity-100' : 'opacity-0'
+        }`}
         alt="world map"
         style={{ maxWidth: '100%', height: 'auto' }}
         draggable={false}
@@ -91,26 +120,6 @@ export const WorldMap = React.memo(({
         viewBox="0 0 800 400"
         className="w-full h-full absolute inset-0 pointer-events-none select-none"
       >
-        {/* Force disable animations on mobile screens via CSS */}
-        <style>
-          {`
-            @media (max-width: 1024px) {
-              .world-map-animation {
-                animation: none !important;
-                transition: none !important;
-              }
-              .world-map-animation path {
-                stroke-dasharray: none !important;
-                stroke-dashoffset: 0 !important;
-                animation: none !important;
-              }
-              .world-map-animation circle {
-                animation: none !important;
-              }
-            }
-          `}
-        </style>
-        
         <g className="world-map-animation">
         {projectedDots.map(({ startPoint, endPoint }, i) => (
           <g key={`path-group-${i}`}>
@@ -134,11 +143,11 @@ export const WorldMap = React.memo(({
                   pathLength: 0,
                 }}
                 animate={{
-                  pathLength: 1,
+                  pathLength: isLoaded ? 1 : 0,
                 }}
                 transition={{
                   duration: 2.5,
-                  delay: 0.8 * i,
+                  delay: isLoaded ? 0.8 * i : 0,
                   ease: "easeInOut",
                   repeat: Infinity,
                   repeatDelay: 1,
