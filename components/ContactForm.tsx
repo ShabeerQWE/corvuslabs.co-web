@@ -156,20 +156,10 @@ const ContactForm: React.FC = React.memo(() => {
             </p>
           </div>
           <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-            {/* Conditionally render globe based on mobile detection */}
-            {!isMobile ? (
-              <div className="relative h-64 w-full overflow-hidden rounded-lg">
-                <Globe className="top-4" />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-48 text-gray-500">
-                <div className="text-center">
-                  <div className="text-2xl mb-2">🌍</div>
-                  <p className="text-sm">Global Connectivity</p>
-                  <p className="text-xs">Serving clients worldwide</p>
-                </div>
-              </div>
-            )}
+            <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg border bg-background px-8 pb-8 pt-8 shadow-xl h-64">
+              <Globe className="top-16" />
+              <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
+            </div>
           </div>
         </div>
 

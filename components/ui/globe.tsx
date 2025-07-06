@@ -12,24 +12,24 @@ const GLOBE_CONFIG: COBEOptions = {
   devicePixelRatio: 2,
   phi: 0,
   theta: 0.3,
-  dark: 0.2,
-  diffuse: 0.8,
+  dark: 0,
+  diffuse: 0.4,
   mapSamples: 16000,
-  mapBrightness: 1.0,
-  baseColor: [0.9, 0.9, 0.9],
-  markerColor: [59 / 255, 130 / 255, 246 / 255], // Blue color matching the theme
-  glowColor: [0.9, 0.9, 0.9],
+  mapBrightness: 1.2,
+  baseColor: [1, 1, 1],
+  markerColor: [251 / 255, 100 / 255, 21 / 255],
+  glowColor: [1, 1, 1],
   markers: [
-    { location: [40.7128, -74.0060], size: 0.08 }, // New York
-    { location: [51.5074, -0.1278], size: 0.08 }, // London
-    { location: [35.6762, 139.6503], size: 0.06 }, // Tokyo
-    { location: [37.7749, -122.4194], size: 0.06 }, // San Francisco
-    { location: [52.5200, 13.4050], size: 0.05 }, // Berlin
-    { location: [-33.8688, 151.2093], size: 0.05 }, // Sydney
-    { location: [28.6139, 77.2090], size: 0.07 }, // New Delhi
-    { location: [-1.2921, 36.8219], size: 0.05 }, // Nairobi
-    { location: [55.7558, 37.6173], size: 0.06 }, // Moscow
-    { location: [-23.5505, -46.6333], size: 0.07 }, // São Paulo
+    { location: [14.5995, 120.9842], size: 0.03 },
+    { location: [19.076, 72.8777], size: 0.1 },
+    { location: [23.8103, 90.4125], size: 0.05 },
+    { location: [30.0444, 31.2357], size: 0.07 },
+    { location: [39.9042, 116.4074], size: 0.08 },
+    { location: [-23.5505, -46.6333], size: 0.1 },
+    { location: [19.4326, -99.1332], size: 0.1 },
+    { location: [40.7128, -74.006], size: 0.1 },
+    { location: [34.6937, 135.5022], size: 0.05 },
+    { location: [41.0082, 28.9784], size: 0.06 },
   ],
 }
 
@@ -64,7 +64,7 @@ export function Globe({
 
   const onRender = useCallback(
     (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.003 // Slower rotation
+      if (!pointerInteracting.current) phi += 0.005
       state.phi = phi + r
       state.width = width * 2
       state.height = width * 2
