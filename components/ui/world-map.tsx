@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import DottedMap from "dotted-map";
 
@@ -17,6 +17,21 @@ export const WorldMap = React.memo(({
   lineColor = "#0ea5e9",
 }: MapProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+      const isSmallScreen = window.innerWidth < 768; // Less than md breakpoint
+      setIsMobile(isMobileDevice || isSmallScreen);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // Memoize expensive calculations
   const { svgMap, projectedDots } = useMemo(() => {
@@ -67,26 +82,38 @@ export const WorldMap = React.memo(({
       >
         {projectedDots.map(({ startPoint, endPoint }, i) => (
           <g key={`path-group-${i}`}>
-            <motion.path
-              d={createCurvedPath(startPoint, endPoint)}
-              fill="none"
-              stroke="url(#path-gradient)"
-              strokeWidth="1"
-              initial={{
-                pathLength: 0,
-              }}
-              animate={{
-                pathLength: 1,
-              }}
-              transition={{
-                duration: 2.5,
-                delay: 0.8 * i,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatDelay: 1,
-                repeatType: "loop",
-              }}
-            />
+            {isMobile ? (
+              // Static path for mobile (no animation)
+              <path
+                d={createCurvedPath(startPoint, endPoint)}
+                fill="none"
+                stroke={lineColor}
+                strokeWidth="1"
+                opacity="0.6"
+              />
+            ) : (
+              // Animated path for desktop
+              <motion.path
+                d={createCurvedPath(startPoint, endPoint)}
+                fill="none"
+                stroke="url(#path-gradient)"
+                strokeWidth="1"
+                initial={{
+                  pathLength: 0,
+                }}
+                animate={{
+                  pathLength: 1,
+                }}
+                transition={{
+                  duration: 2.5,
+                  delay: 0.8 * i,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  repeatType: "loop",
+                }}
+              />
+            )}
           </g>
         ))}
 
@@ -108,30 +135,32 @@ export const WorldMap = React.memo(({
                 r="2"
                 fill={lineColor}
               />
-              <circle
-                cx={startPoint.x}
-                cy={startPoint.y}
-                r="2"
-                fill={lineColor}
-                opacity="0.5"
-              >
-                <animate
-                  attributeName="r"
-                  from="2"
-                  to="10"
-                  dur="2s"
-                  begin="0s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  from="0.6"
-                  to="0"
-                  dur="2s"
-                  begin="0s"
-                  repeatCount="indefinite"
-                />
-              </circle>
+              {!isMobile && (
+                <circle
+                  cx={startPoint.x}
+                  cy={startPoint.y}
+                  r="2"
+                  fill={lineColor}
+                  opacity="0.5"
+                >
+                  <animate
+                    attributeName="r"
+                    from="2"
+                    to="10"
+                    dur="2s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    from="0.6"
+                    to="0"
+                    dur="2s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )}
             </g>
             <g key={`end-${i}`}>
               <circle
@@ -140,30 +169,32 @@ export const WorldMap = React.memo(({
                 r="2"
                 fill={lineColor}
               />
-              <circle
-                cx={endPoint.x}
-                cy={endPoint.y}
-                r="2"
-                fill={lineColor}
-                opacity="0.5"
-              >
-                <animate
-                  attributeName="r"
-                  from="2"
-                  to="10"
-                  dur="2s"
-                  begin="0s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  from="0.6"
-                  to="0"
-                  dur="2s"
-                  begin="0s"
-                  repeatCount="indefinite"
-                />
-              </circle>
+              {!isMobile && (
+                <circle
+                  cx={endPoint.x}
+                  cy={endPoint.y}
+                  r="2"
+                  fill={lineColor}
+                  opacity="0.5"
+                >
+                  <animate
+                    attributeName="r"
+                    from="2"
+                    to="10"
+                    dur="2s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    from="0.6"
+                    to="0"
+                    dur="2s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )}
             </g>
           </g>
         ))}
