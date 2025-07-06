@@ -7,7 +7,9 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: './' },
       { find: '@/components', replacement: './components' },
-      { find: '@/components/*', replacement: './components/*' }
+      { find: '@/components/*', replacement: './components/*' },
+      { find: '@/lib', replacement: './lib' },
+      { find: '@/lib/*', replacement: './lib/*' }
     ]
   },
 });

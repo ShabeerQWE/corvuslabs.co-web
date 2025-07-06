@@ -1,6 +1,7 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { AnimatedModal } from './ui/animated-modal';
+import { StarBorder } from './ui/star-border';
 import ContactForm from './ContactForm';
 
 const Contact: React.FC = () => {
@@ -62,10 +63,14 @@ const Contact: React.FC = () => {
             
             <AnimatedModal
               trigger={
-                <>
+                <StarBorder 
+                  color="#3b82f6" 
+                  speed="4s"
+                  className="transition-transform hover:scale-105"
+                >
                   <MessageCircle className="inline mr-2" size={20} />
                   Send Us a Message
-                </>
+                </StarBorder>
               }
               title="Send Us a Message"
             >
