@@ -42,16 +42,16 @@ const Contact: React.FC = () => {
             </div>
           </div>
           <div className="flex space-x-4">
-            <a href="#" className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-3 rounded-full transition-colors duration-300 cursor-pointer">
+            <a href="#" className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors duration-300 cursor-pointer flex items-center justify-center">
               <i className="fab fa-linkedin-in text-xl"></i>
             </a>
-            <a href="#" className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-3 rounded-full transition-colors duration-300 cursor-pointer">
+            <a href="#" className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors duration-300 cursor-pointer flex items-center justify-center">
               <i className="fab fa-twitter text-xl"></i>
             </a>
-            <a href="#" className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-3 rounded-full transition-colors duration-300 cursor-pointer">
+            <a href="#" className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors duration-300 cursor-pointer flex items-center justify-center">
               <i className="fab fa-facebook-f text-xl"></i>
             </a>
-            <a href="#" className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-3 rounded-full transition-colors duration-300 cursor-pointer">
+            <a href="#" className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors duration-300 cursor-pointer flex items-center justify-center">
               <i className="fab fa-instagram text-xl"></i>
             </a>
           </div>
