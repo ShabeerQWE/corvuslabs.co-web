@@ -47,7 +47,7 @@ const handler: Handler = async (event, context) => {
 
     // Send email using Resend
     const emailData = await resend.emails.send({
-      from: 'onboarding@resend.dev', // ✅ Use Resend's default verified domain for testing
+      from: 'contact@corvuslabs.co', // ✅ Use Resend's default verified domain for testing
       to: ['hello@corvuslabs.co'], // Primary recipient
       // to: ['hello@corvuslabs.co', 'backup@gmail.com'], // 🔧 Uncomment and add backup email for testing
       replyTo: email, // ✅ Set user's email as reply-to (fixed property name)
