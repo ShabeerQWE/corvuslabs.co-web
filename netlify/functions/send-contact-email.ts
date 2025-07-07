@@ -46,11 +46,11 @@ const handler: Handler = async (event, context) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Send email using Resend
-    const emailData = await resend.emails.send({
-      from: 'contact@corvuslabs.co', // ✅ Use Resend's default verified domain for testing
-      to: ['hello@corvuslabs.co'], // Primary recipient
-      // to: ['hello@corvuslabs.co', 'backup@gmail.com'], // 🔧 Uncomment and add backup email for testing
-      replyTo: email, // ✅ Set user's email as reply-to (fixed property name)
+    // 1. Send notification to admin (you)
+    const adminEmailData = await resend.emails.send({
+      from: 'contact@corvuslabs.co',
+      to: ['hello@corvuslabs.co'],
+      replyTo: email,
       subject: `Contact Form: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -74,7 +74,6 @@ const handler: Handler = async (event, context) => {
           </div>
         </div>
       `,
-      // Also send a plain text version
       text: `
 New Contact Form Submission
 
@@ -90,7 +89,87 @@ This email was sent from the contact form on your website.
       `,
     });
 
-    console.log('Email sent successfully:', emailData);
+    // 2. Send acknowledgment to user
+    const userEmailData = await resend.emails.send({
+      from: 'contact@corvuslabs.co',
+      to: [email], // Send to the user who submitted the form
+      subject: `Thank you for contacting Corvus Labs`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 300;">Thank You!</h1>
+            <p style="color: #e8f0fe; margin: 10px 0 0 0; font-size: 16px;">We've received your message</p>
+          </div>
+          
+          <div style="padding: 40px 20px; background: white;">
+            <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">
+              Hi <strong>${name}</strong>,
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">
+              Thank you for reaching out to us! We've successfully received your message and our team will review it shortly.
+            </p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 25px 0;">
+              <h3 style="color: #495057; margin-top: 0; font-size: 18px;">Your Message Summary:</h3>
+              <p style="margin: 10px 0; color: #6c757d;"><strong>Subject:</strong> ${subject}</p>
+              <p style="margin: 10px 0; color: #6c757d;"><strong>Message:</strong></p>
+              <p style="color: #495057; font-style: italic; margin: 10px 0; padding: 15px; background: white; border-left: 4px solid #667eea; border-radius: 4px;">
+                "${message}"
+              </p>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">
+              We typically respond within <strong>24 hours</strong>. If your inquiry is urgent, please don't hesitate to call us directly.
+            </p>
+            
+            <div style="background: #e8f0fe; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+              <p style="margin: 0; color: #1565c0; font-weight: 500;">
+                Need immediate assistance?
+              </p>
+              <p style="margin: 5px 0 0 0; color: #1976d2;">
+                Email: hello@corvuslabs.co
+              </p>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #333;">
+              Best regards,<br>
+              <strong>The Corvus Labs Team</strong>
+            </p>
+          </div>
+          
+          <div style="background: #495057; padding: 20px; text-align: center;">
+            <p style="margin: 0; color: #adb5bd; font-size: 14px;">
+              This is an automated acknowledgment email. Please do not reply to this message.
+            </p>
+            <p style="margin: 5px 0 0 0; color: #6c757d; font-size: 12px;">
+              © 2025 Corvus Labs. All rights reserved.
+            </p>
+          </div>
+        </div>
+      `,
+      text: `
+Hi ${name},
+
+Thank you for reaching out to us! We've successfully received your message and our team will review it shortly.
+
+Your Message Summary:
+Subject: ${subject}
+Message: "${message}"
+
+We typically respond within 24 hours. If your inquiry is urgent, please don't hesitate to email us directly at hello@corvuslabs.co.
+
+Best regards,
+The Corvus Labs Team
+
+---
+This is an automated acknowledgment email. Please do not reply to this message.
+© 2025 Corvus Labs. All rights reserved.
+      `,
+    });
+
+    console.log('Admin email sent successfully:', adminEmailData);
+    console.log('User acknowledgment email sent successfully:', userEmailData);
 
     return {
       statusCode: 200,
@@ -99,8 +178,11 @@ This email was sent from the contact form on your website.
       },
       body: JSON.stringify({
         success: true,
-        message: 'Email sent successfully!',
-        data: emailData,
+        message: 'Emails sent successfully!',
+        data: {
+          adminEmail: adminEmailData,
+          userEmail: userEmailData
+        },
       }),
     };
 
