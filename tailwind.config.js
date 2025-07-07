@@ -11,6 +11,7 @@ module.exports = {
         marquee: 'marquee var(--duration, 30s) linear infinite',
         'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
         'star-movement-top': 'star-movement-top linear infinite alternate',
+        'shine-pulse': 'shine-pulse var(--shine-pulse-duration) infinite linear',
       },
       keyframes: {
         marquee: {
@@ -23,6 +24,17 @@ module.exports = {
         'star-movement-top': {
           '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
           '100%': { transform: 'translate(100%, 0%)', opacity: '0' },
+        },
+        'shine-pulse': {
+          '0%': {
+            'background-position': '0% 0%',
+          },
+          '50%': {
+            'background-position': '100% 100%',
+          },
+          'to': {
+            'background-position': '0% 0%',
+          },
         },
       }
     },
