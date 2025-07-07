@@ -20,6 +20,10 @@ interface FormStatus {
   error: string;
 }
 
+interface ValidationErrors {
+  email: string;
+}
+
 const ContactForm: React.FC = React.memo(() => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -32,6 +36,10 @@ const ContactForm: React.FC = React.memo(() => {
     isSubmitting: false,
     success: false,
     error: ''
+  });
+
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({
+    email: ''
   });
 
   // Mobile detection state
@@ -55,12 +63,34 @@ const ContactForm: React.FC = React.memo(() => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Email validation function
+  const validateEmail = (email: string): string => {
+    if (!email) return '';
+    
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address';
+    }
+    
+    return '';
+  };
+
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    
+    // Real-time email validation
+    if (name === 'email') {
+      const emailError = validateEmail(value);
+      setValidationErrors(prev => ({
+        ...prev,
+        email: emailError
+      }));
+    }
     
     // Clear any existing errors when user starts typing
     if (status.error) {
@@ -70,6 +100,16 @@ const ContactForm: React.FC = React.memo(() => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate email before submission
+    const emailError = validateEmail(formData.email);
+    if (emailError) {
+      setValidationErrors(prev => ({
+        ...prev,
+        email: emailError
+      }));
+      return;
+    }
     
     // Reset status
     setStatus({
@@ -102,6 +142,11 @@ const ContactForm: React.FC = React.memo(() => {
           email: '',
           subject: '',
           message: ''
+        });
+        
+        // Clear validation errors
+        setValidationErrors({
+          email: ''
         });
       } else {
         setStatus({
@@ -196,7 +241,17 @@ const ContactForm: React.FC = React.memo(() => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
+                  className={validationErrors.email ? 'border-red-500' : ''}
                 />
+                {validationErrors.email && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-sm mt-1"
+                  >
+                    {validationErrors.email}
+                  </motion.p>
+                )}
               </LabelInputContainer>
             </div>
             <LabelInputContainer>
@@ -226,7 +281,7 @@ const ContactForm: React.FC = React.memo(() => {
             <GlowingButton 
               type="submit" 
               className="text-lg w-full" 
-              disabled={status.isSubmitting}
+              disabled={status.isSubmitting || !!validationErrors.email}
             >
               {status.isSubmitting ? 'Sending...' : 'Send Message →'}
             </GlowingButton>
