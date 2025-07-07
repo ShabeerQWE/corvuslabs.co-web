@@ -79,7 +79,7 @@ const ContactForm: React.FC = React.memo(() => {
     });
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch('/.netlify/functions/send-contact-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const ContactForm: React.FC = React.memo(() => {
         setStatus({
           isSubmitting: false,
           success: false,
-          error: result.message || 'Failed to send message'
+          error: result.error || 'Failed to send message'
         });
       }
     } catch (error) {
