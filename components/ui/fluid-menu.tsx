@@ -24,9 +24,9 @@ export function MenuItem({ children, onClick, disabled = false, icon, isActive =
       onClick={onClick}
       disabled={disabled}
     >
-      <span className="flex items-center justify-center h-full">
+      <span className="absolute inset-0 flex items-center justify-center">
         {icon && (
-          <span className="h-6 w-6 transition-all duration-200 group-hover:[&_svg]:stroke-[2.5] group-hover:scale-110">
+          <span className="flex items-center justify-center w-6 h-6 transition-all duration-200 group-hover:[&_svg]:stroke-[2.5] group-hover:scale-110">
             {icon}
           </span>
         )}

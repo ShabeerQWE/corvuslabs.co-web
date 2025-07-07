@@ -101,11 +101,11 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
           >
             <MenuItem 
               icon={
-                <div className="relative w-6 h-6">
-                  <div className="absolute inset-0 transition-all duration-300 ease-in-out origin-center opacity-100 scale-100 rotate-0 [div[data-expanded=true]_&]:opacity-0 [div[data-expanded=true]_&]:scale-0 [div[data-expanded=true]_&]:rotate-180">
+                <div className="relative w-6 h-6 flex items-center justify-center">
+                  <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out origin-center opacity-100 scale-100 rotate-0 [div[data-expanded=true]_&]:opacity-0 [div[data-expanded=true]_&]:scale-0 [div[data-expanded=true]_&]:rotate-180">
                     <MenuIcon size={20} strokeWidth={1.5} className="text-white" />
                   </div>
-                  <div className="absolute inset-0 transition-all duration-300 ease-in-out origin-center opacity-0 scale-0 -rotate-180 [div[data-expanded=true]_&]:opacity-100 [div[data-expanded=true]_&]:scale-100 [div[data-expanded=true]_&]:rotate-0">
+                  <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out origin-center opacity-0 scale-0 -rotate-180 [div[data-expanded=true]_&]:opacity-100 [div[data-expanded=true]_&]:scale-100 [div[data-expanded=true]_&]:rotate-0">
                     <X size={20} strokeWidth={1.5} className="text-white" />
                   </div>
                 </div>
