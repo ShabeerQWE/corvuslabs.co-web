@@ -50,36 +50,58 @@ export const CyberCard: React.FC<CyberCardProps> = ({
         </div>
 
         {/* Content section */}
-        <div className="p-6 relative">
-          {/* Icon and title */}
-          <div className="flex items-center mb-4">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center mr-3 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transition-all duration-300">
+        <div className="relative h-auto min-h-[220px]">
+          {/* Default state - title centered under image and hover prompt */}
+          <div className="p-6 flex flex-col items-center justify-center text-center group-hover:opacity-0 group-hover:pointer-events-none transition-all duration-300">
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center mr-3 shadow-lg shadow-cyan-400/30">
                 <i className={`${icon} text-white text-lg`}></i>
               </div>
-              {/* Icon glow effect */}
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
+              <h3 className="text-xl font-bold text-white">
+                {title}
+              </h3>
             </div>
-            <h3 className="text-xl font-bold text-white group-hover:text-cyan-100 transition-colors duration-300">
-              {title}
-            </h3>
+            <div className="relative">
+              <p className="text-cyan-400 text-sm font-medium tracking-[0.2em] uppercase bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
+                HOVER FOR DETAILS
+              </p>
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 text-cyan-400/20 text-sm font-medium tracking-[0.2em] uppercase blur-sm">
+                HOVER FOR DETAILS
+              </div>
+            </div>
           </div>
 
-          {/* Description */}
-          <p className="text-gray-300 mb-6 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
-            {description}
-          </p>
+          {/* Hover state - full content */}
+          <div className="absolute inset-0 p-6 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 flex flex-col justify-between min-h-[220px]">
+            {/* Icon and title on hover */}
+            <div className="flex items-center mb-4">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center mr-3 shadow-lg shadow-cyan-400/50">
+                  <i className={`${icon} text-white text-lg`}></i>
+                </div>
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 opacity-20 blur-md"></div>
+              </div>
+              <h3 className="text-xl font-bold text-cyan-100">
+                {title}
+              </h3>
+            </div>
 
-          {/* Learn more button */}
-          <div className="relative">
-            <button className="relative overflow-hidden px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 text-cyan-100 font-medium hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/50 hover:text-white transition-all duration-300 group/btn">
-              <span className="relative z-10 flex items-center">
-                Learn more 
-                <i className="fas fa-arrow-right ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300"></i>
-              </span>
-              {/* Button glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-500/0 transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
-            </button>
+            {/* Description */}
+            <p className="text-gray-200 leading-relaxed flex-grow mb-4 text-sm">
+              {description}
+            </p>
+
+            {/* Learn more button */}
+            <div className="mt-auto">
+              <button className="relative overflow-hidden px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500/30 to-purple-500/30 border border-cyan-400/50 text-white font-medium transition-all duration-300 group/btn hover:from-cyan-500/40 hover:to-purple-500/40">
+                <span className="relative z-10 flex items-center">
+                  Learn more 
+                  <i className="fas fa-arrow-right ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300"></i>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/20 to-purple-500/0 transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
+              </button>
+            </div>
           </div>
 
           {/* Bottom accent lines */}
