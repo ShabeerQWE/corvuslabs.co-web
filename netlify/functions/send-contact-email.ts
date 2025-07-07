@@ -111,9 +111,13 @@ This email was sent from the contact form on your website.
               <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
               <div style="position: absolute; bottom: -30px; left: -30px; width: 60px; height: 60px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
               
-              <!-- Logo placeholder -->
-              <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); border-radius: 12px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255, 255, 255, 0.3);">
-                <div style="color: white; font-size: 24px; font-weight: bold;">C</div>
+              <!-- Corvus Labs Logo -->
+              <div style="margin: 0 auto 20px; text-align: center;">
+                <div style="display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 15px 25px; border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.2);">
+                  <div style="color: white; font-size: 20px; font-weight: 700; letter-spacing: 1px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                    CORVUSLABS
+                  </div>
+                </div>
               </div>
               
               <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 600; letter-spacing: -0.5px;">Thank You!</h1>
