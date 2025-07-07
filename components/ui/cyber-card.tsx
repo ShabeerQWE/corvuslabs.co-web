@@ -111,6 +111,7 @@ export const CyberCard: React.FC<CyberCardProps> = ({
         {/* Corner accents */}
         <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300"></div>
         <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-purple-500/50 group-hover:border-purple-500 transition-colors duration-300"></div>
+        <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300"></div>
       </div>
     </div>
   );
