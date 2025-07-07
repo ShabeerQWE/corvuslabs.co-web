@@ -47,8 +47,9 @@ const handler: Handler = async (event, context) => {
 
     // Send email using Resend
     const emailData = await resend.emails.send({
-      from: 'contact@corvuslabs.co', // Replace with your verified domain
+      from: 'onboarding@resend.dev', // ✅ Use Resend's default verified domain for testing
       to: 'hello@corvuslabs.co', // Where you want to receive emails
+      reply_to: email, // ✅ Set user's email as reply-to
       subject: `Contact Form: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -104,6 +105,11 @@ This email was sent from the contact form on your website.
 
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      cause: error.cause,
+      stack: error.stack
+    });
     
     return {
       statusCode: 500,
