@@ -127,7 +127,7 @@ const Services: React.FC = () => (
         <ExpandableCyberCard
           icon="fas fa-laptop-code"
           title="Web Design & Development"
-          description="Craft modern, high-performance websites that elevate your brand and drive engagement — built using industry-leading tools like React, Next.js, and Webflow."
+          description="Elevate your online presence with custom websites designed for performance, clarity, and conversion."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
           imageAlt="Web Design & Development"
           expandedContent={{
@@ -148,13 +148,29 @@ const Services: React.FC = () => (
           }}
         />
 
-        {/* Service 6 */}
-        <CyberCard
-          icon="fas fa-cogs"
-          title="Operations Consulting"
-          description="Streamline operations and supply chains to improve efficiency, reduce costs, and enhance overall business performance."
+        {/* Service 6 - System Integration Services */}
+        <ExpandableCyberCard
+          icon="fas fa-plug"
+          title="System Integration Services"
+          description="Unify your digital tools with seamless integrations that optimize workflows and eliminate data silos."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=7&orientation=landscape&flag=171e3f95943df0363f525e7bc5220049"
-          imageAlt="Operations Consulting"
+          imageAlt="System Integration Services"
+          expandedContent={{
+            whatWeOffer: [
+              "Integration between CRMs, ERPs, marketing, and support tools",
+              "Custom workflows using n8n, Zapier, or direct APIs",
+              "Real-time sync of leads, inventory, invoices, and tickets",
+              "Authentication and permission-aware connections",
+              "Monitoring, error-handling, and failover setup"
+            ],
+            keyBenefits: [
+              "Eliminate manual data entry and reduce human error",
+              "Improve visibility across departments and platforms",
+              "Automate repetitive business processes",
+              "Speed up decision-making with live data sync",
+              "Future-proof your stack with flexible, modular integrations"
+            ]
+          }}
         />
       </div>
 
@@ -260,7 +276,7 @@ const Services: React.FC = () => (
         <ExpandableMobileServiceCard
           icon="fas fa-laptop-code"
           title="Web Design & Development"
-          description="Craft modern, high-performance websites that elevate your brand and drive engagement — built using industry-leading tools like React, Next.js, and Webflow."
+          description="Elevate your online presence with custom websites designed for performance, clarity, and conversion."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
           imageAlt="Web Design & Development"
           expandedContent={{
@@ -281,13 +297,29 @@ const Services: React.FC = () => (
           }}
         />
 
-        {/* Mobile Service 6 */}
-        <MobileServiceCard
-          icon="fas fa-cogs"
-          title="Operations Consulting"
-          description="Streamline operations and supply chains to improve efficiency, reduce costs, and enhance overall business performance."
+        {/* Mobile Service 6 - System Integration Services */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-plug"
+          title="System Integration Services"
+          description="Unify your digital tools with seamless integrations that optimize workflows and eliminate data silos."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=7&orientation=landscape&flag=171e3f95943df0363f525e7bc5220049"
-          imageAlt="Operations Consulting"
+          imageAlt="System Integration Services"
+          expandedContent={{
+            whatWeOffer: [
+              "Integration between CRMs, ERPs, marketing, and support tools",
+              "Custom workflows using n8n, Zapier, or direct APIs",
+              "Real-time sync of leads, inventory, invoices, and tickets",
+              "Authentication and permission-aware connections",
+              "Monitoring, error-handling, and failover setup"
+            ],
+            keyBenefits: [
+              "Eliminate manual data entry and reduce human error",
+              "Improve visibility across departments and platforms",
+              "Automate repetitive business processes",
+              "Speed up decision-making with live data sync",
+              "Future-proof your stack with flexible, modular integrations"
+            ]
+          }}
         />
       </div>
     </div>

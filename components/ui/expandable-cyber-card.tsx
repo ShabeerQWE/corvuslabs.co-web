@@ -122,7 +122,7 @@ export const ExpandableCyberCard: React.FC<ExpandableCyberCardProps> = ({
           </div>
 
           {/* Hover state - full content */}
-          <div className={`absolute inset-0 p-6 transition-all duration-300 flex flex-col justify-between min-h-[220px] ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'}`}>
+          <div className={`absolute inset-0 p-6 pr-8 pb-12 transition-all duration-300 flex flex-col justify-between min-h-[220px] z-10 ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'}`}>
             {/* Icon and title on hover */}
             <div className="flex items-center mb-4">
               <div className="relative">
@@ -142,10 +142,10 @@ export const ExpandableCyberCard: React.FC<ExpandableCyberCardProps> = ({
             </p>
 
             {/* Learn more button */}
-            <div className="mt-auto">
+            <div className="mt-auto mb-2 relative z-20">
               <button 
                 onClick={handleLearnMore}
-                className="relative overflow-hidden px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500/30 to-purple-500/30 border border-cyan-400/50 text-white font-medium transition-all duration-300 group/btn hover:from-cyan-500/40 hover:to-purple-500/40"
+                className="relative overflow-hidden px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500/30 to-purple-500/30 border border-cyan-400/50 text-white font-medium transition-all duration-300 group/btn hover:from-cyan-500/40 hover:to-purple-500/40 z-20"
               >
                 <span className="relative z-10 flex items-center">
                   Learn more 
@@ -224,9 +224,9 @@ export const ExpandableCyberCard: React.FC<ExpandableCyberCardProps> = ({
         </div>
 
         {/* Corner accents */}
-        <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300"></div>
-        <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-purple-500/50 group-hover:border-purple-500 transition-colors duration-300"></div>
-        <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300"></div>
+        <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300 -z-10"></div>
+        <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-purple-500/50 group-hover:border-purple-500 transition-colors duration-300 -z-10"></div>
+        <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyan-400/50 group-hover:border-cyan-400 transition-colors duration-300 -z-10"></div>
       </div>
     </div>
   );
