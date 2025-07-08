@@ -51,40 +51,101 @@ const Services: React.FC = () => (
           }}
         />
 
-        {/* Service 2 */}
-        <CyberCard
-          icon="fas fa-digital-tachograph"
-          title="Digital Transformation"
-          description="Navigate the digital landscape with innovative solutions that modernize your operations and enhance customer experiences."
+        {/* Service 2 - CRM Systems */}
+        <ExpandableCyberCard
+          icon="fas fa-users-cog"
+          title="CRM Systems"
+          description="Streamline your customer relationships with world-class CRM implementations tailored to your business."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=3&orientation=landscape&flag=2cb6d86ff897e5fd0760f2bb64071180"
-          imageAlt="Digital Transformation"
+          imageAlt="CRM Systems"
+          expandedContent={{
+            whatWeOffer: [
+              "Zoho CRM implementation and customization",
+              "HubSpot setup and optimization",
+              "Salesforce configuration and integration",
+              "GoHighLevel deployment and training",
+              "Custom CRM workflow automation"
+            ],
+            keyBenefits: [
+              "Centralized customer data management",
+              "Improved sales team productivity",
+              "Enhanced customer insights",
+              "Automated marketing campaigns"
+            ]
+          }}
         />
 
-        {/* Service 3 */}
-        <CyberCard
-          icon="fas fa-dollar-sign"
-          title="Financial Advisory"
-          description="Optimize financial performance with expert guidance on investment strategies, risk management, and capital allocation."
+        {/* Service 3 - ERP Solutions */}
+        <ExpandableCyberCard
+          icon="fas fa-cogs"
+          title="ERP Solutions"
+          description="Unify your business operations with comprehensive ERP solutions that grow with your organization."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=4&orientation=landscape&flag=32400648ca9eb4e3410e77f9a887adc3"
-          imageAlt="Financial Advisory"
+          imageAlt="ERP Solutions"
+          expandedContent={{
+            whatWeOffer: [
+              "Odoo implementation and customization",
+              "Module configuration and integration",
+              "Custom module development",
+              "Data migration and system setup",
+              "Training and ongoing support"
+            ],
+            keyBenefits: [
+              "Integrated business processes",
+              "Real-time operational visibility",
+              "Reduced operational costs",
+              "Improved decision-making"
+            ]
+          }}
         />
 
-        {/* Service 4 */}
-        <CyberCard
-          icon="fas fa-search"
-          title="Market Research"
-          description="Gain valuable insights into market trends, consumer behavior, and competitive landscapes to inform strategic decision-making."
+        {/* Service 4 - MSP Services */}
+        <ExpandableCyberCard
+          icon="fas fa-shield-alt"
+          title="MSP Services"
+          description="Comprehensive managed services to keep your technology infrastructure secure, compliant, and optimized."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=5&orientation=landscape&flag=e9e14e44cde36bfd208d4d42c3010660"
-          imageAlt="Market Research"
+          imageAlt="MSP Services"
+          expandedContent={{
+            whatWeOffer: [
+              "AI compliance and governance",
+              "Security audits and assessments",
+              "Network management and monitoring",
+              "Cloud infrastructure management",
+              "Disaster recovery planning"
+            ],
+            keyBenefits: [
+              "Proactive issue prevention",
+              "Enhanced security posture",
+              "Regulatory compliance assurance",
+              "Predictable IT costs"
+            ]
+          }}
         />
 
-        {/* Service 5 */}
-        <CyberCard
-          icon="fas fa-users"
-          title="Organizational Development"
-          description="Enhance organizational effectiveness through strategic talent management, leadership development, and culture transformation."
+        {/* Service 5 - Web Design & Development */}
+        <ExpandableCyberCard
+          icon="fas fa-laptop-code"
+          title="Web Design & Development"
+          description="Craft modern, high-performance websites that elevate your brand and drive engagement — built using industry-leading tools like React, Next.js, and Webflow."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
-          imageAlt="Organizational Development"
+          imageAlt="Web Design & Development"
+          expandedContent={{
+            whatWeOffer: [
+              "Custom-designed websites tailored to your business goals",
+              "Development with React, Next.js, or Webflow",
+              "UI/UX prototyping and user-centered design systems",
+              "Fully responsive layouts across all screen sizes",
+              "Optimization for SEO, accessibility, and performance"
+            ],
+            keyBenefits: [
+              "Establish a strong digital presence with premium design",
+              "Improve engagement with intuitive user interfaces",
+              "Boost visibility through SEO-optimized structure",
+              "Ensure lightning-fast performance and mobile responsiveness",
+              "Build a future-ready platform with modern frameworks"
+            ]
+          }}
         />
 
         {/* Service 6 */}
@@ -123,40 +184,101 @@ const Services: React.FC = () => (
           }}
         />
 
-        {/* Mobile Service 2 */}
-        <MobileServiceCard
-          icon="fas fa-digital-tachograph"
-          title="Digital Transformation"
-          description="Navigate the digital landscape with innovative solutions that modernize your operations and enhance customer experiences."
+        {/* Mobile Service 2 - CRM Systems */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-users-cog"
+          title="CRM Systems"
+          description="Streamline your customer relationships with world-class CRM implementations tailored to your business."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=3&orientation=landscape&flag=2cb6d86ff897e5fd0760f2bb64071180"
-          imageAlt="Digital Transformation"
+          imageAlt="CRM Systems"
+          expandedContent={{
+            whatWeOffer: [
+              "Zoho CRM implementation and customization",
+              "HubSpot setup and optimization",
+              "Salesforce configuration and integration",
+              "GoHighLevel deployment and training",
+              "Custom CRM workflow automation"
+            ],
+            keyBenefits: [
+              "Centralized customer data management",
+              "Improved sales team productivity",
+              "Enhanced customer insights",
+              "Automated marketing campaigns"
+            ]
+          }}
         />
 
-        {/* Mobile Service 3 */}
-        <MobileServiceCard
-          icon="fas fa-dollar-sign"
-          title="Financial Advisory"
-          description="Optimize financial performance with expert guidance on investment strategies, risk management, and capital allocation."
+        {/* Mobile Service 3 - ERP Solutions */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-cogs"
+          title="ERP Solutions"
+          description="Unify your business operations with comprehensive ERP solutions that grow with your organization."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=4&orientation=landscape&flag=32400648ca9eb4e3410e77f9a887adc3"
-          imageAlt="Financial Advisory"
+          imageAlt="ERP Solutions"
+          expandedContent={{
+            whatWeOffer: [
+              "Odoo implementation and customization",
+              "Module configuration and integration",
+              "Custom module development",
+              "Data migration and system setup",
+              "Training and ongoing support"
+            ],
+            keyBenefits: [
+              "Integrated business processes",
+              "Real-time operational visibility",
+              "Reduced operational costs",
+              "Improved decision-making"
+            ]
+          }}
         />
 
-        {/* Mobile Service 4 */}
-        <MobileServiceCard
-          icon="fas fa-search"
-          title="Market Research"
-          description="Gain valuable insights into market trends, consumer behavior, and competitive landscapes to inform strategic decision-making."
+        {/* Mobile Service 4 - MSP Services */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-shield-alt"
+          title="MSP Services"
+          description="Comprehensive managed services to keep your technology infrastructure secure, compliant, and optimized."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=5&orientation=landscape&flag=e9e14e44cde36bfd208d4d42c3010660"
-          imageAlt="Market Research"
+          imageAlt="MSP Services"
+          expandedContent={{
+            whatWeOffer: [
+              "AI compliance and governance",
+              "Security audits and assessments",
+              "Network management and monitoring",
+              "Cloud infrastructure management",
+              "Disaster recovery planning"
+            ],
+            keyBenefits: [
+              "Proactive issue prevention",
+              "Enhanced security posture",
+              "Regulatory compliance assurance",
+              "Predictable IT costs"
+            ]
+          }}
         />
 
-        {/* Mobile Service 5 */}
-        <MobileServiceCard
-          icon="fas fa-users"
-          title="Organizational Development"
-          description="Enhance organizational effectiveness through strategic talent management, leadership development, and culture transformation."
+        {/* Mobile Service 5 - Web Design & Development */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-laptop-code"
+          title="Web Design & Development"
+          description="Craft modern, high-performance websites that elevate your brand and drive engagement — built using industry-leading tools like React, Next.js, and Webflow."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
-          imageAlt="Organizational Development"
+          imageAlt="Web Design & Development"
+          expandedContent={{
+            whatWeOffer: [
+              "Custom-designed websites tailored to your business goals",
+              "Development with React, Next.js, or Webflow",
+              "UI/UX prototyping and user-centered design systems",
+              "Fully responsive layouts across all screen sizes",
+              "Optimization for SEO, accessibility, and performance"
+            ],
+            keyBenefits: [
+              "Establish a strong digital presence with premium design",
+              "Improve engagement with intuitive user interfaces",
+              "Boost visibility through SEO-optimized structure",
+              "Ensure lightning-fast performance and mobile responsiveness",
+              "Build a future-ready platform with modern frameworks"
+            ]
+          }}
         />
 
         {/* Mobile Service 6 */}

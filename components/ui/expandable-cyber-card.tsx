@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface ExpandableCyberCardProps {
   icon: string;
@@ -21,6 +21,7 @@ export const ExpandableCyberCard: React.FC<ExpandableCyberCardProps> = ({
   expandedContent
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleLearnMore = () => {
     if (expandedContent) {
@@ -28,10 +29,45 @@ export const ExpandableCyberCard: React.FC<ExpandableCyberCardProps> = ({
     }
   };
 
+  // Handle clicking outside the card to collapse
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isExpanded && cardRef.current && !cardRef.current.contains(event.target as Node)) {
+        // Check if the click is on another expandable card or its learn more button
+        const target = event.target as Element;
+        const isClickOnAnotherCard = target.closest('[data-expandable-card]');
+        const isClickOnLearnMoreButton = target.closest('button') && 
+          (target.textContent?.includes('Learn more') || target.closest('button')?.textContent?.includes('Learn more'));
+        
+        // Only close if it's not a click on another card or learn more button
+        if (!isClickOnAnotherCard && !isClickOnLearnMoreButton) {
+          setIsExpanded(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isExpanded]);
+
   return (
-    <div className={`group relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-1 hover:from-cyan-500/20 hover:via-purple-500/20 hover:to-pink-500/20 transition-all duration-500 transform ${isExpanded ? 'scale-100 rotate-0' : 'hover:scale-105 hover:rotate-1'}`}>
+    <div 
+      ref={cardRef}
+      data-expandable-card="true"
+      className={`group relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-1 transition-all duration-500 transform ${
+        isExpanded 
+          ? 'scale-100 rotate-0 from-cyan-500/20 via-purple-500/20 to-pink-500/20' 
+          : 'hover:from-cyan-500/20 hover:via-purple-500/20 hover:to-pink-500/20 hover:scale-105 hover:rotate-1'
+      }`}
+    >
       {/* Animated border glow */}
-      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-75 blur-sm transition-opacity duration-500 ${isExpanded ? 'opacity-75' : ''}`}></div>
+      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 blur-sm transition-opacity duration-500 ${
+        isExpanded 
+          ? 'opacity-75' 
+          : 'opacity-0 group-hover:opacity-75'
+      }`}></div>
       
       {/* Inner card */}
       <div className="relative bg-gray-900/95 backdrop-blur-sm rounded-2xl overflow-hidden h-full">
