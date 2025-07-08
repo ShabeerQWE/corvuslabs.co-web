@@ -12,6 +12,7 @@ module.exports = {
         'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
         'star-movement-top': 'star-movement-top linear infinite alternate',
         'shine-pulse': 'shine-pulse var(--shine-pulse-duration) infinite linear',
+        'fade-in': 'fade-in 0.5s ease-in-out',
       },
       keyframes: {
         marquee: {
@@ -34,6 +35,16 @@ module.exports = {
           },
           'to': {
             'background-position': '0% 0%',
+          },
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
         },
       }

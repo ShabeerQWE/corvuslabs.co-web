@@ -1,6 +1,8 @@
 import React from 'react';
 import { CyberCard } from "./ui/cyber-card";
+import { ExpandableCyberCard } from "./ui/expandable-cyber-card";
 import MobileServiceCard from "./ui/mobile-service-card";
+import ExpandableMobileServiceCard from "./ui/expandable-mobile-service-card";
 
 const Services: React.FC = () => (
   <section id="services" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
@@ -25,13 +27,28 @@ const Services: React.FC = () => (
       </div>
       {/* Desktop Cards - Hidden on Mobile */}
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Service 1 */}
-        <CyberCard
-          icon="fas fa-chart-line"
-          title="Strategic Consulting"
-          description="Develop comprehensive business strategies that align with your vision and drive sustainable growth in competitive markets."
+        {/* Service 1 - AI Automation */}
+        <ExpandableCyberCard
+          icon="fas fa-robot"
+          title="AI Automation"
+          description="Transform your business processes with intelligent automation powered by cutting-edge AI technology."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=2&orientation=landscape&flag=9d6156f18624d1acd2b159095980055c"
-          imageAlt="Strategic Consulting"
+          imageAlt="AI Automation"
+          expandedContent={{
+            whatWeOffer: [
+              "n8n workflow automation and integration",
+              "Large Language Model (LLM) integration",
+              "Custom AI-powered process automation",
+              "Intelligent document processing",
+              "Automated decision-making systems"
+            ],
+            keyBenefits: [
+              "Reduce manual work by up to 80%",
+              "Eliminate human errors",
+              "24/7 automated operations",
+              "Scale operations without adding headcount"
+            ]
+          }}
         />
 
         {/* Service 2 */}
@@ -82,13 +99,28 @@ const Services: React.FC = () => (
 
       {/* Mobile Cards - Hidden on Desktop */}
       <div className="md:hidden grid grid-cols-1 gap-6 max-w-md mx-auto">
-        {/* Mobile Service 1 */}
-        <MobileServiceCard
-          icon="fas fa-chart-line"
-          title="Strategic Consulting"
-          description="Develop comprehensive business strategies that align with your vision and drive sustainable growth in competitive markets."
+        {/* Mobile Service 1 - AI Automation */}
+        <ExpandableMobileServiceCard
+          icon="fas fa-robot"
+          title="AI Automation"
+          description="Transform your business processes with intelligent automation powered by cutting-edge AI technology."
           imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=2&orientation=landscape&flag=9d6156f18624d1acd2b159095980055c"
-          imageAlt="Strategic Consulting"
+          imageAlt="AI Automation"
+          expandedContent={{
+            whatWeOffer: [
+              "n8n workflow automation and integration",
+              "Large Language Model (LLM) integration",
+              "Custom AI-powered process automation",
+              "Intelligent document processing",
+              "Automated decision-making systems"
+            ],
+            keyBenefits: [
+              "Reduce manual work by up to 80%",
+              "Eliminate human errors",
+              "24/7 automated operations",
+              "Scale operations without adding headcount"
+            ]
+          }}
         />
 
         {/* Mobile Service 2 */}
