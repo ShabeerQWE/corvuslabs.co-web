@@ -4,6 +4,14 @@ import { Marquee } from './ui/marquee';
 const LogoMarquee: React.FC = () => {
   // Logo components
   const Logos = {
+    corvus: () => (
+      <img
+        src="/Logov2.svg"
+        alt="Corvus Labs Logo"
+        className="h-[32px] w-auto"
+        style={{ display: 'inline-block', verticalAlign: 'middle' }}
+      />
+    ),
     tailwindcss: () => (
       <svg
         className="h-[28px] sm:w-auto w-[140px]"
@@ -188,6 +196,7 @@ const LogoMarquee: React.FC = () => {
   };
 
   const allLogos = [
+    Logos.corvus,
     Logos.tailwindcss,
     Logos.nextjs,
     Logos.vscode,
