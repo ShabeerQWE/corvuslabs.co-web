@@ -64,13 +64,13 @@ const Contact: React.FC = () => {
             
             <AnimatedModal
               trigger={
-                <div className="transition-transform hover:scale-105 py-1 px-6 bg-gray-900/70 backdrop-blur-md border border-gray-600/30 hover:bg-gray-800/80 text-white rounded-full cursor-pointer shadow-lg">
-                  <div className="flex flex-col items-center justify-center gap-0">
+                <div className="py-1 px-6 bg-gray-900/70 backdrop-blur-md border border-gray-600/30 hover:bg-gray-800/80 text-white rounded-full cursor-pointer shadow-lg transition-all duration-200 hover:scale-[1.02] will-change-transform">
+                  <div className="flex flex-col items-center justify-center gap-0 mt-1.5">
                     <div className="flex items-center">
                       <MessageCircle className="inline mr-2" size={18} />
                       Send Us a Message
                     </div>
-                    <div className="scale-[0.6] -mt-1 transform-gpu">
+                    <div className="scale-[0.7] -mt-1">
                       <MessageLoadingDemo />
                     </div>
                   </div>
