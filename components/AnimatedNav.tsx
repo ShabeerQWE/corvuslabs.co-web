@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
 import FluidNavMenu from './ui/fluid-nav-menu';
+import { LoaderThree } from './ui/loader';
 
 interface AnimatedNavProps {
   isScrolled: boolean;
@@ -68,18 +69,7 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
           className="flex items-center gap-3"
         >
           {/* Logo Image */}
-          <div className="w-12 h-12 relative">
-            <img
-              src="/minilogo.svg"
-              alt="Corvus Labs Logo"
-              className="w-full h-full object-contain"
-              onLoad={() => console.log('[Logo Debug] Logo loaded successfully in AnimatedNav')}
-              onError={(e) => {
-                console.error('[Logo Debug] Logo failed to load in AnimatedNav:', e);
-                console.error('[Logo Debug] Attempted path:', (e.target as HTMLImageElement).src);
-              }}
-            />
-          </div>
+          <LoaderThree />
           <h1 className="text-2xl font-bold tracking-tighter">
             <span className="text-black">CORVUS</span>
             <span className="text-gray-600">LABS</span>
