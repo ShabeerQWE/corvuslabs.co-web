@@ -79,7 +79,7 @@ export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }
 
   return (
     <div 
-      className="md:hidden fixed top-4 right-6 z-50" 
+      className="md:hidden fixed top-1 right-6 z-50" 
       data-nav-menu
       style={{
         opacity: isVisible ? 1 : 0,
