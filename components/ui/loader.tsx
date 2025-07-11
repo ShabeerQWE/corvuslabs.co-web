@@ -2,19 +2,12 @@ import React from "react";
 
 export const LoaderThree: React.FC = () => {
   return (
-    <div className="relative w-16 h-16 flex items-center justify-center">
-      {/* Animated circular border around the logo - positioned outside */}
-      <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-blue-600 border-r-blue-400 animate-spin"></div>
-      <div className="absolute inset-1 rounded-full border-2 border-transparent border-b-gray-600 border-l-gray-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
-      
-      {/* Logo in the center - keeping original size with padding from edges */}
-      <div className="relative z-10 w-12 h-12">
-        <img
-          src="/minilogo.svg"
-          alt="Corvus Labs Logo"
-          className="w-full h-full object-contain"
-        />
-      </div>
+    <div className="w-12 h-12 flex items-center justify-center">
+      <img
+        src="/minilogo.svg"
+        alt="Corvus Labs Logo"
+        className="w-full h-full object-contain"
+      />
     </div>
   );
 };
