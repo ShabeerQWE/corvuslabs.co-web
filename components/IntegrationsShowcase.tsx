@@ -50,7 +50,6 @@ const integrations = [
     { name: "Stripe", logo: "https://img.icons8.com/color/48/stripe.png" },
     { name: "PayPal", logo: "https://img.icons8.com/color/48/paypal.png" },
     { name: "Shopify", logo: "https://img.icons8.com/color/48/shopify.png" },
-    { name: "ODOO", logo: "https://img.icons8.com/color/48/shopify.png" },
     { name: "WordPress", logo: "https://img.icons8.com/color/48/wordpress.png" },
     { name: "n8n", logo: "/n8n.png" },
     { name: "GHL", logo: "/GHL.png" },
