@@ -21,7 +21,7 @@ export function CompareDemo() {
           <div className="h-full w-full bg-black/80 backdrop-blur-sm p-12 flex flex-col text-white relative">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent"></div>
             <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <h2 className="text-4xl font-bold text-center leading-none whitespace-nowrap" style={{ lineHeight: '1', margin: 0, padding: 0, transform: 'translateY(-2px)' }}>Vision</h2>
+              <h2 className="text-4xl font-bold text-center leading-none whitespace-nowrap text-purple-400" style={{ lineHeight: '1', margin: 0, padding: 0, transform: 'translateY(-2px)' }}>Vission</h2>
             </div>
             <div className="flex-1 flex items-center justify-center">
               <p className="text-xl leading-relaxed text-center max-w-md mt-4">
