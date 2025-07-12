@@ -4,39 +4,29 @@ import React from "react";
 export const SparklesCore = ({ className = "", particleColor = "#ffffff" }) => {
   return (
     <div className={`absolute inset-0 ${className}`}>
-      <div className="sparkles">
+      <div className="sparkles" style={{ position: 'absolute', width: '100%', height: '100%', overflow: 'hidden' }}>
         {Array.from({ length: 30 }).map((_, i) => (
           <div
             key={i}
             className="sparkle"
             style={{
-              left: `${45 + Math.random() * 10}%`, // Center around 50% with small variance
+              position: 'absolute',
+              width: '3px',
+              height: '3px',
+              background: particleColor,
+              borderRadius: '50%',
+              opacity: 0,
+              boxShadow: `0 0 6px ${particleColor}`,
+              left: `${45 + Math.random() * 10}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
               animationDuration: `${2 + Math.random() * 2}s`,
+              animation: 'sparkle infinite ease-in-out',
             }}
           />
         ))}
       </div>
-      <style jsx>{`
-        .sparkles {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-        }
-        
-        .sparkle {
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          background: ${particleColor};
-          border-radius: 50%;
-          opacity: 0;
-          animation: sparkle infinite ease-in-out;
-          box-shadow: 0 0 6px ${particleColor};
-        }
-        
+      <style>{`
         @keyframes sparkle {
           0%, 100% {
             opacity: 0;

@@ -112,7 +112,6 @@ export function IntegrationsShowcase() {
             src="/minilogo.svg"
             alt="Corvus Labs Logo"
             className="w-24 h-24 md:w-32 md:h-32 object-contain cursor-default relative z-10"
-            style={{ alignBaseline: "baseline" }}
             onError={(e) => {
               console.log('Logo failed to load, trying Logov2.svg');
               const target = e.target as HTMLImageElement;
@@ -152,7 +151,6 @@ export function IntegrationsShowcase() {
                     alt={integration.name}
                     className="object-contain cursor-default w-[28px] h-[28px] md:w-[38px] md:h-[38px]"
                     style={{
-                      alignBaseline: "baseline",
                       width: "28px",
                       height: "28px",
                     }}
@@ -191,7 +189,6 @@ export function IntegrationsShowcase() {
                     alt={integration.name}
                     className="object-contain cursor-default w-[28px] h-[28px] md:w-[38px] md:h-[38px]"
                     style={{
-                      alignBaseline: "baseline",
                       width: "28px",
                       height: "28px",
                     }}
