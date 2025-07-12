@@ -105,9 +105,7 @@ export const Compare: React.FC<CompareProps> = ({
       const rect = sliderRef.current.getBoundingClientRect();
       const x = clientX - rect.left;
       const percent = (x / rect.width) * 100;
-      requestAnimationFrame(() => {
-        setSliderXPercent(Math.max(0, Math.min(100, percent)));
-      });
+      setSliderXPercent(Math.max(0, Math.min(100, percent)));
     }
   }, [slideMode, isDragging]);
 
@@ -150,14 +148,13 @@ export const Compare: React.FC<CompareProps> = ({
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchMove}>
       <AnimatePresence initial={false}>
-        <motion.div
+        <div
           className="h-full w-px absolute top-0 m-auto z-30 bg-gradient-to-b from-transparent from-[5%] to-[95%] via-indigo-500 to-transparent"
           style={{
             left: `${sliderXPercent}%`,
             top: "0",
             zIndex: 40,
-          }}
-          transition={{ duration: 0 }}>
+          }}>
           <div
             className="w-36 h-full [mask-image:radial-gradient(100px_at_left,white,transparent)] absolute top-1/2 -translate-y-1/2 left-0 bg-gradient-to-r from-indigo-400 via-transparent to-transparent z-20 opacity-50" />
           <div
@@ -182,21 +179,20 @@ export const Compare: React.FC<CompareProps> = ({
               </svg>
             </div>
           )}
-        </motion.div>
+        </div>
       </AnimatePresence>
       <div
         className="overflow-hidden w-full h-full relative z-20 pointer-events-none">
         <AnimatePresence initial={false}>
           {firstContent || firstImage ? (
-            <motion.div
+            <div
               className={cn(
                 "absolute inset-0 z-20 rounded-2xl shrink-0 w-full h-full select-none overflow-hidden",
                 firstImageClassName
               )}
               style={{
                 clipPath: `inset(0 ${100 - sliderXPercent}% 0 0)`,
-              }}
-              transition={{ duration: 0 }}>
+              }}>
               {firstContent ? (
                 <div className="w-full h-full">
                   {firstContent}
@@ -211,7 +207,7 @@ export const Compare: React.FC<CompareProps> = ({
                   )}
                   draggable={false} />
               )}
-            </motion.div>
+            </div>
           ) : null}
         </AnimatePresence>
       </div>

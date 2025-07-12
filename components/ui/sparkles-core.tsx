@@ -18,7 +18,7 @@ export const SparklesCore = ({ className = "", particleColor = "#ffffff" }) => {
           />
         ))}
       </div>
-      <style jsx>{`
+      <style>{`
         .sparkles {
           position: absolute;
           width: 100%;

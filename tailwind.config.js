@@ -13,6 +13,7 @@ module.exports = {
         'star-movement-top': 'star-movement-top linear infinite alternate',
         'shine-pulse': 'shine-pulse var(--shine-pulse-duration) infinite linear',
         'fade-in': 'fade-in 0.5s ease-in-out',
+        'aurora': 'aurora 60s ease infinite',
       },
       keyframes: {
         marquee: {
@@ -45,6 +46,17 @@ module.exports = {
           '100%': {
             opacity: '1',
             transform: 'translateY(0)',
+          },
+        },
+        'aurora': {
+          '0%': {
+            'background-position': '50% 50%, 50% 50%',
+          },
+          '50%': {
+            'background-position': '350% 50%, 350% 50%',
+          },
+          '100%': {
+            'background-position': '50% 50%, 50% 50%',
           },
         },
       }

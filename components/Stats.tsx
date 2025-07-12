@@ -1,9 +1,10 @@
 import React from 'react';
 import { CompareDemo } from './ui/compare-demo';
+import { AuroraBackground } from './ui/aurora-background';
 
 const Stats: React.FC = () => (
-  <section className="py-16 bg-black text-white relative overflow-hidden">
-    {/* Animated background effects */}
+  <AuroraBackground className="py-16 bg-black text-white" showRadialGradient={false}>
+    {/* Existing animated background effects */}
     <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-pulse"></div>
     <div className="absolute inset-0">
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-bounce" style={{ animationDuration: '6s' }}></div>
@@ -22,7 +23,7 @@ const Stats: React.FC = () => (
         </div>
       </div>
     </div>
-  </section>
+  </AuroraBackground>
 );
 
 export default Stats;
