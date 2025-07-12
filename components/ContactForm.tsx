@@ -282,6 +282,7 @@ const ContactForm: React.FC = React.memo(() => {
               type="submit" 
               className="text-lg w-full" 
               disabled={status.isSubmitting || !!validationErrors.email}
+              isLoading={status.isSubmitting}
             >
               {status.isSubmitting ? 'Sending...' : 'Send Message →'}
             </GlowingButton>
