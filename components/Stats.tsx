@@ -1,6 +1,7 @@
 import React from 'react';
 import { CompareDemo } from './ui/compare-demo';
 import { AuroraBackground } from './ui/aurora-background';
+import { MobileVisionMissionCard } from './ui/mobile-vision-mission-card';
 
 const Stats: React.FC = () => (
   <AuroraBackground className="py-16 bg-black text-white" showRadialGradient={false}>
@@ -14,12 +15,20 @@ const Stats: React.FC = () => (
     
     <div className="max-w-6xl mx-auto px-8 relative z-10">
       <div className="flex items-center justify-center">
-        {/* Glowing border container */}
-        <div className="relative p-1 rounded-3xl bg-gradient-to-r from-purple-500/30 via-cyan-500/30 to-blue-500/30 animate-pulse">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-blue-500/20 rounded-3xl blur-lg animate-pulse"></div>
-          <div className="relative bg-black rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/20">
-            <CompareDemo />
+        {/* Desktop version - hidden on mobile */}
+        <div className="hidden md:block">
+          {/* Glowing border container */}
+          <div className="relative p-1 rounded-3xl bg-gradient-to-r from-purple-500/30 via-cyan-500/30 to-blue-500/30 animate-pulse">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-blue-500/20 rounded-3xl blur-lg animate-pulse"></div>
+            <div className="relative bg-black rounded-3xl overflow-hidden shadow-2xl shadow-purple-500/20">
+              <CompareDemo />
+            </div>
           </div>
+        </div>
+        
+        {/* Mobile version - hidden on desktop */}
+        <div className="block md:hidden w-full">
+          <MobileVisionMissionCard />
         </div>
       </div>
     </div>
