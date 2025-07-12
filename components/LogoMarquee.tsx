@@ -1,5 +1,6 @@
 import React from 'react';
 import { Marquee } from './ui/marquee';
+import { IntegrationsShowcase } from './IntegrationsShowcase';
 
 const LogoMarquee: React.FC = () => {
   // Logo components
@@ -221,16 +222,7 @@ const LogoMarquee: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Powered by Industry Standards</h2>
           <p className="text-gray-600">Built with modern technologies and trusted by leading companies</p>
         </div>
-        <Marquee pauseOnHover speed={25} className="py-4">
-          {allLogos.map((Logo, index) => (
-            <div
-              key={index}
-              className="relative h-full w-fit mx-16 flex items-center justify-start opacity-80 hover:opacity-100 transition-opacity duration-300"
-            >
-              <Logo />
-            </div>
-          ))}
-        </Marquee>
+        <IntegrationsShowcase />
       </div>
     </section>
   );
