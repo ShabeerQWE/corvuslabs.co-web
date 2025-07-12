@@ -113,8 +113,15 @@ export const Compare: React.FC<CompareProps> = ({
   const handleMouseDown = useCallback((e: React.MouseEvent) => handleStart(e.clientX), [handleStart]);
   const handleMouseUp = useCallback(() => handleEnd(), [handleEnd]);
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    handleMove(e.clientX);
-  }, [handleMove]);
+    if (!sliderRef.current) return;
+    if (slideMode === "hover" || (slideMode === "drag" && isDragging)) {
+      const rect = sliderRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percent = (x / rect.width) * 100;
+      const clampedPercent = Math.max(0, Math.min(100, percent));
+      setSliderXPercent(clampedPercent);
+    }
+  }, [slideMode, isDragging]);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!autoplay) {
