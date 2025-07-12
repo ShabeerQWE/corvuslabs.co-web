@@ -34,7 +34,7 @@ const integrations = [
     { name: "Jira", logo: "https://img.icons8.com/color/48/jira.png" },
     { name: "Confluence", logo: "https://img.icons8.com/color/48/confluence.png" },
     { name: "Bitbucket", logo: "https://img.icons8.com/color/48/bitbucket.png" },
-    { name: "ODOO", logo: "/tool icons/odoo.png" },
+    { name: "ODOO", logo: "/odoo.png" },
   ],
   // Second row
   [
@@ -52,8 +52,8 @@ const integrations = [
     { name: "Shopify", logo: "https://img.icons8.com/color/48/shopify.png" },
     { name: "ODOO", logo: "https://img.icons8.com/color/48/shopify.png" },
     { name: "WordPress", logo: "https://img.icons8.com/color/48/wordpress.png" },
-    { name: "n8n", logo: "/tool icons/n8n.png" },
-    { name: "GHL", logo: "/tool icons/GHL.png" },
+    { name: "n8n", logo: "/n8n.png" },
+    { name: "GHL", logo: "/GHL.png" },
   ],
 ]
 
