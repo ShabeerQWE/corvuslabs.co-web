@@ -25,44 +25,51 @@ export const MobileVisionMissionCard = () => {
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto">
+    <div 
+      className="w-full max-w-sm mx-auto"
+      style={{ perspective: "1000px" }}
+    >
       <motion.div
-        className="relative h-[400px] w-full cursor-pointer"
+        className="relative h-[400px] w-full cursor-pointer transform-gpu"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onClick={handleCardClick}
         whileTap={{ scale: 0.98 }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ 
+          duration: 0.6, 
+          ease: [0.23, 1, 0.32, 1] // Custom easing for smoother animation
+        }}
+        style={{ 
+          transformStyle: "preserve-3d",
+        }}
       >
-        <AnimatePresence mode="wait">
-          {!isFlipped ? (
-            <motion.div
-              key="vision"
-              initial={{ rotateY: 0 }}
-              animate={{ rotateY: 0 }}
-              exit={{ rotateY: 90 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 backface-hidden"
-            >
-              <VisionCard />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="mission"
-              initial={{ rotateY: -90 }}
-              animate={{ rotateY: 0 }}
-              exit={{ rotateY: -90 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 backface-hidden"
-            >
-              <MissionCard />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Vision Card (Front) */}
+        <motion.div
+          className="absolute inset-0 w-full h-full backface-hidden"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(0deg)"
+          }}
+        >
+          <VisionCard />
+        </motion.div>
+
+        {/* Mission Card (Back) */}
+        <motion.div
+          className="absolute inset-0 w-full h-full backface-hidden"
+          style={{ 
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)"
+          }}
+        >
+          <MissionCard />
+        </motion.div>
         
         {/* Swipe indicator */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
-          <div className={`w-2 h-2 rounded-full transition-colors ${!isFlipped ? 'bg-white' : 'bg-white/40'}`}></div>
-          <div className={`w-2 h-2 rounded-full transition-colors ${isFlipped ? 'bg-white' : 'bg-white/40'}`}></div>
+          <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${!isFlipped ? 'bg-white' : 'bg-white/40'}`}></div>
+          <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${isFlipped ? 'bg-white' : 'bg-white/40'}`}></div>
         </div>
       </motion.div>
     </div>
