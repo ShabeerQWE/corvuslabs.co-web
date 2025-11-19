@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { AnimatedModal } from './ui/animated-modal';
 import { StarBorder } from './ui/star-border';
@@ -6,6 +6,8 @@ import { MessageLoadingDemo } from './ui/demo';
 import ContactForm from './ContactForm';
 
 const Contact: React.FC = () => {
+  const [showPhones, setShowPhones] = useState(false);
+
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -21,9 +23,9 @@ const Contact: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-bold mb-1">Our Locations</h3>
                   <p className="text-gray-600">
-                    Colombo, Sri Lanka<br />
-                    Toronto, Canada<br />
-                    Melbourne, Australia
+                    Colombo, WP, Sri Lanka<br />
+                    Toronto, ON, Canada<br />
+                    Melbourne, VIC, Australia
                   </p>
                 </div>
               </div>
@@ -42,7 +44,20 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Call Us</h3>
-                  <p className="text-gray-600">+94 76 605 0403</p>
+                  {!showPhones ? (
+                    <button
+                      onClick={() => setShowPhones(true)}
+                      className="text-blue-600 hover:text-blue-700 font-medium underline"
+                    >
+                      Click to view phone numbers
+                    </button>
+                  ) : (
+                    <div className="text-gray-600 space-y-1">
+                      <p>+94 76 605 0403 (LK)</p>
+                      <p>+1 437 333 9707 (CA)</p>
+                      <p>+61 423 201 504 (AU)</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
