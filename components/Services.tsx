@@ -57,6 +57,39 @@ const services = [
 const Services: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const renderCardContent = (service: typeof services[0]) => (
+    <div className="bg-neutral-900/80 backdrop-blur-2xl border border-white/10 p-6 md:p-10 rounded-xl w-full shadow-2xl">
+      <div className="mb-6">
+        <div className="mb-6">
+          {React.createElement(service.icon, {
+            size: 32,
+            strokeWidth: 1.5,
+            className: "text-white"
+          })}
+        </div>
+
+        <h3 className="text-3xl font-bold mb-4 tracking-tight text-white">{service.title}</h3>
+        <p className="text-neutral-400 text-lg leading-relaxed mb-8 font-light">
+          {service.description}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {service.features.map((feature, i) => (
+          <div key={i} className="flex items-center text-neutral-300 text-sm tracking-wide bg-white/5 rounded-lg px-4 py-3 border border-white/5">
+            <div className="w-1.5 h-1.5 bg-white rounded-full mr-3"></div>
+            {feature}
+          </div>
+        ))}
+      </div>
+
+      <button className="w-full group flex items-center justify-center gap-3 bg-white text-black py-4 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors">
+        Explore Solution
+        <ArrowUpRight size={16} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+      </button>
+    </div>
+  );
+
   return (
     <section id="services" className="bg-black text-white pt-0 pb-20 md:pb-32 relative overflow-hidden">
       {/* Top Gradient for Diffused Border */}
@@ -93,23 +126,44 @@ const Services: React.FC = () => {
           {/* Left: List */}
           <div className="lg:col-span-5 flex flex-col">
             {services.map((service, index) => (
-              <div
-                key={service.id}
-                className={`group flex items-center gap-4 py-5 border-b border-white/10 cursor-pointer transition-all duration-300 ${activeIndex === index ? 'border-white pl-4' : 'hover:border-white/50 hover:pl-2'}`}
-                onMouseEnter={() => setActiveIndex(index)}
-              >
-                <ChevronRight
-                  className={`w-6 h-6 transition-all duration-300 ${activeIndex === index ? 'text-white opacity-100' : 'text-neutral-600 opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'}`}
-                />
-                <h3 className={`text-2xl md:text-3xl font-light tracking-tight transition-colors duration-300 ${activeIndex === index ? 'text-white' : 'text-neutral-500 group-hover:text-neutral-300'}`}>
-                  {service.title}
-                </h3>
+              <div key={service.id} className="flex flex-col">
+                <div
+                  className={`group flex items-center gap-4 py-5 border-b border-white/10 cursor-pointer transition-all duration-300 ${activeIndex === index ? 'border-white pl-4' : 'hover:border-white/50 hover:pl-2'}`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <ChevronRight
+                    className={`w-6 h-6 transition-all duration-300 ${activeIndex === index ? 'text-white opacity-100' : 'text-neutral-600 opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'}`}
+                  />
+                  <h3 className={`text-2xl md:text-3xl font-light tracking-tight transition-colors duration-300 ${activeIndex === index ? 'text-white' : 'text-neutral-500 group-hover:text-neutral-300'}`}>
+                    {service.title}
+                  </h3>
+                </div>
+
+                {/* Mobile Detail View (Accordion Style) */}
+                <div className="lg:hidden">
+                  <AnimatePresence>
+                    {activeIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="py-6">
+                          {renderCardContent(service)}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Right: Detail Card */}
-          <div className="lg:col-span-7 flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+          {/* Right: Detail Card (Desktop Only) */}
+          <div className="hidden lg:flex lg:col-span-7 items-center justify-center lg:justify-end mt-8 lg:mt-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -117,36 +171,9 @@ const Services: React.FC = () => {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
                 transition={{ duration: 0.4 }}
-                className="bg-neutral-900/80 backdrop-blur-2xl border border-white/10 p-8 md:p-10 rounded-xl w-full shadow-2xl"
+                className="w-full"
               >
-                <div className="mb-6">
-                  <div className="mb-6">
-                    {React.createElement(services[activeIndex].icon, {
-                      size: 32,
-                      strokeWidth: 1.5,
-                      className: "text-white"
-                    })}
-                  </div>
-
-                  <h3 className="text-3xl font-bold mb-4 tracking-tight text-white">{services[activeIndex].title}</h3>
-                  <p className="text-neutral-400 text-lg leading-relaxed mb-8 font-light">
-                    {services[activeIndex].description}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  {services[activeIndex].features.map((feature, i) => (
-                    <div key={i} className="flex items-center text-neutral-300 text-sm tracking-wide bg-white/5 rounded-lg px-4 py-3 border border-white/5">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-3"></div>
-                      {feature}
-                    </div>
-                  ))}
-                </div>
-
-                <button className="w-full group flex items-center justify-center gap-3 bg-white text-black py-4 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors">
-                  Explore Solution
-                  <ArrowUpRight size={16} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                </button>
+                {renderCardContent(services[activeIndex])}
               </motion.div>
             </AnimatePresence>
           </div>

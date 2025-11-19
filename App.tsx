@@ -3,9 +3,10 @@ import AnimatedNav from './components/AnimatedNav';
 import Hero from './components/Hero';
 import LogoMarquee from './components/LogoMarquee';
 import Services from './components/Services';
+import FlipWordsDemo from './components/flip-words-demo';
 import About from './components/About';
 import Stats from './components/Stats';
-import Testimonials from './components/Testimonials';
+
 import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -28,9 +29,10 @@ const App: React.FC = () => {
       <Hero />
       <LogoMarquee />
       <Services />
+      <FlipWordsDemo />
       <About />
       <Stats />
-      <Testimonials />
+
       <CTA />
       <Contact />
       <Footer />
