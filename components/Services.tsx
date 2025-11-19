@@ -1,329 +1,159 @@
-import React from 'react';
-import { CyberCard } from "./ui/cyber-card";
-import { ExpandableCyberCard } from "./ui/expandable-cyber-card";
-import MobileServiceCard from "./ui/mobile-service-card";
-import ExpandableMobileServiceCard from "./ui/expandable-mobile-service-card";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Cpu, Database, Globe, Layers, Shield, Zap, ChevronRight } from 'lucide-react';
 
-const Services: React.FC = () => (
-  <section id="services" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
-    {/* Background cyber grid */}
-    <div className="absolute inset-0 opacity-5" 
-         style={{
-           backgroundImage: `
-             linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px),
-             linear-gradient(90deg, rgba(0, 255, 255, 0.3) 1px, transparent 1px)
-           `,
-           backgroundSize: '40px 40px'
-         }}>
-    </div>
-    {/* Gradient overlays */}
-    <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl"></div>
-    <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-purple-500/10 to-transparent rounded-full blur-3xl"></div>
-    
-    <div className="container mx-auto px-6 relative z-10">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold mb-4 text-white">Our Services</h2>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">Comprehensive consulting solutions designed to elevate your business to new heights.</p>
+// Final Monotone Data
+const services = [
+  {
+    id: 'ai',
+    title: "AI Automation",
+    description: "Leverage the power of artificial intelligence to automate complex workflows, reduce operational costs, and unlock predictive insights. We build custom AI agents and neural networks that evolve with your business.",
+    icon: Cpu,
+    imageUrl: "/service-ai-mono.png",
+    features: ["Autonomous Agents", "Predictive Analytics", "Workflow Automation", "LLM Integration"]
+  },
+  {
+    id: 'crm',
+    title: "CRM Systems",
+    description: "Centralize your customer interactions with a bespoke CRM strategy. Whether it's Salesforce, HubSpot, or a custom build, we ensure your sales and support teams have a 360-degree view of every client.",
+    icon: Database,
+    imageUrl: "/service-crm-mono.png",
+    features: ["Pipeline Management", "Automated Outreach", "Customer Insights", "Data Migration"]
+  },
+  {
+    id: 'web',
+    title: "Web Experience",
+    description: "We craft immersive, high-performance websites that blend aesthetic excellence with technical precision. From 3D interactive elements to lightning-fast load times, we define your digital brand.",
+    icon: Globe,
+    imageUrl: "/service-web-mono.png",
+    features: ["3D WebGL Experiences", "React & Next.js", "Conversion Optimization", "Headless CMS"]
+  },
+  {
+    id: 'erp',
+    title: "ERP Solutions",
+    description: "Break down silos with a comprehensive ERP solution. We integrate finance, supply chain, and HR into a single source of truth, enabling real-time decision making at an enterprise scale.",
+    icon: Layers,
+    imageUrl: "/service-erp-mono.png",
+    features: ["Supply Chain Sync", "Financial Reporting", "Inventory Management", "HR Automation"]
+  },
+  {
+    id: 'msp',
+    title: "Managed Security",
+    description: "Sleep soundly knowing your digital assets are protected by 24/7 monitoring and military-grade security protocols. We manage your cloud infrastructure so you can focus on growth.",
+    icon: Shield,
+    imageUrl: "/service-msp-mono.png",
+    features: ["24/7 Threat Monitoring", "Cloud Compliance", "Disaster Recovery", "Zero Trust Security"]
+  },
+  {
+    id: 'integration',
+    title: "System Integration",
+    description: "Stop copy-pasting data. We build robust API bridges between your favorite tools, ensuring data flows seamlessly across your entire tech stack without manual intervention.",
+    icon: Zap,
+    imageUrl: "/service-int-mono.png",
+    features: ["Custom API Development", "Real-time Sync", "Legacy System Support", "Secure Data Transfer"]
+  }
+];
+
+const Services: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <section id="services" className="bg-black text-white pt-0 pb-20 md:pb-32 relative overflow-hidden">
+      {/* Top Gradient for Diffused Border */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+
+      {/* Full Screen Background with Monotone Filter */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.6 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 z-0"
+        >
+          <img
+            src={services[activeIndex].imageUrl}
+            alt=""
+            className="w-full h-full object-cover filter grayscale contrast-125 brightness-90 scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/60"></div>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="container mx-auto px-6 relative z-30 pt-12">
+        <div className="mb-12 border-b border-white/10 pb-6">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white">Our Services</h2>
+          <p className="text-neutral-500 mt-3 text-lg max-w-xl">
+            Comprehensive digital solutions designed for clarity, efficiency, and scale.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left: List */}
+          <div className="lg:col-span-5 flex flex-col">
+            {services.map((service, index) => (
+              <div
+                key={service.id}
+                className={`group flex items-center gap-4 py-5 border-b border-white/10 cursor-pointer transition-all duration-300 ${activeIndex === index ? 'border-white pl-4' : 'hover:border-white/50 hover:pl-2'}`}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <ChevronRight
+                  className={`w-6 h-6 transition-all duration-300 ${activeIndex === index ? 'text-white opacity-100' : 'text-neutral-600 opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0'}`}
+                />
+                <h3 className={`text-2xl md:text-3xl font-light tracking-tight transition-colors duration-300 ${activeIndex === index ? 'text-white' : 'text-neutral-500 group-hover:text-neutral-300'}`}>
+                  {service.title}
+                </h3>
+              </div>
+            ))}
+          </div>
+
+          {/* Right: Detail Card */}
+          <div className="lg:col-span-7 flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                transition={{ duration: 0.4 }}
+                className="bg-neutral-900/80 backdrop-blur-2xl border border-white/10 p-8 md:p-10 rounded-xl w-full shadow-2xl"
+              >
+                <div className="mb-6">
+                  <div className="mb-6">
+                    {React.createElement(services[activeIndex].icon, {
+                      size: 32,
+                      strokeWidth: 1.5,
+                      className: "text-white"
+                    })}
+                  </div>
+
+                  <h3 className="text-3xl font-bold mb-4 tracking-tight text-white">{services[activeIndex].title}</h3>
+                  <p className="text-neutral-400 text-lg leading-relaxed mb-8 font-light">
+                    {services[activeIndex].description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  {services[activeIndex].features.map((feature, i) => (
+                    <div key={i} className="flex items-center text-neutral-300 text-sm tracking-wide bg-white/5 rounded-lg px-4 py-3 border border-white/5">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-3"></div>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
+                <button className="w-full group flex items-center justify-center gap-3 bg-white text-black py-4 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors">
+                  Explore Solution
+                  <ArrowUpRight size={16} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
-      {/* Desktop Cards - Hidden on Mobile */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Service 1 - AI Automation */}
-        <ExpandableCyberCard
-          icon="fas fa-robot"
-          title="AI Automation"
-          description="Transform your business processes with intelligent automation powered by cutting-edge AI technology."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=2&orientation=landscape&flag=9d6156f18624d1acd2b159095980055c"
-          imageAlt="AI Automation"
-          expandedContent={{
-            whatWeOffer: [
-              "n8n workflow automation and integration",
-              "Large Language Model (LLM) integration",
-              "Custom AI-powered process automation",
-              "Intelligent document processing",
-              "Automated decision-making systems"
-            ],
-            keyBenefits: [
-              "Reduce manual work by up to 80%",
-              "Eliminate human errors",
-              "24/7 automated operations",
-              "Scale operations without adding headcount"
-            ]
-          }}
-        />
-
-        {/* Service 2 - CRM Systems */}
-        <ExpandableCyberCard
-          icon="fas fa-users-cog"
-          title="CRM Systems"
-          description="Streamline your customer relationships with world-class CRM implementations tailored to your business."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=3&orientation=landscape&flag=2cb6d86ff897e5fd0760f2bb64071180"
-          imageAlt="CRM Systems"
-          expandedContent={{
-            whatWeOffer: [
-              "Zoho CRM implementation and customization",
-              "HubSpot setup and optimization",
-              "Salesforce configuration and integration",
-              "GoHighLevel deployment and training",
-              "Custom CRM workflow automation"
-            ],
-            keyBenefits: [
-              "Centralized customer data management",
-              "Improved sales team productivity",
-              "Enhanced customer insights",
-              "Automated marketing campaigns"
-            ]
-          }}
-        />
-
-        {/* Service 3 - ERP Solutions */}
-        <ExpandableCyberCard
-          icon="fas fa-cogs"
-          title="ERP Solutions"
-          description="Unify your business operations with comprehensive ERP solutions that grow with your organization."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=4&orientation=landscape&flag=32400648ca9eb4e3410e77f9a887adc3"
-          imageAlt="ERP Solutions"
-          expandedContent={{
-            whatWeOffer: [
-              "Odoo implementation and customization",
-              "Module configuration and integration",
-              "Custom module development",
-              "Data migration and system setup",
-              "Training and ongoing support"
-            ],
-            keyBenefits: [
-              "Integrated business processes",
-              "Real-time operational visibility",
-              "Reduced operational costs",
-              "Improved decision-making"
-            ]
-          }}
-        />
-
-        {/* Service 4 - MSP Services */}
-        <ExpandableCyberCard
-          icon="fas fa-shield-alt"
-          title="MSP Services"
-          description="Comprehensive managed services to keep your technology infrastructure secure, compliant, and optimized."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=5&orientation=landscape&flag=e9e14e44cde36bfd208d4d42c3010660"
-          imageAlt="MSP Services"
-          expandedContent={{
-            whatWeOffer: [
-              "AI compliance and governance",
-              "Security audits and assessments",
-              "Network management and monitoring",
-              "Cloud infrastructure management",
-              "Disaster recovery planning"
-            ],
-            keyBenefits: [
-              "Proactive issue prevention",
-              "Enhanced security posture",
-              "Regulatory compliance assurance",
-              "Predictable IT costs"
-            ]
-          }}
-        />
-
-        {/* Service 5 - Web Design & Development */}
-        <ExpandableCyberCard
-          icon="fas fa-laptop-code"
-          title="Web Design & Development"
-          description="Elevate your online presence with custom websites designed for performance, clarity, and conversion."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
-          imageAlt="Web Design & Development"
-          expandedContent={{
-            whatWeOffer: [
-              "Custom-designed websites tailored to your business goals",
-              "Development with React, Next.js, or Webflow",
-              "UI/UX prototyping and user-centered design systems",
-              "Fully responsive layouts across all screen sizes",
-              "Optimization for SEO, accessibility, and performance"
-            ],
-            keyBenefits: [
-              "Establish a strong digital presence with premium design",
-              "Improve engagement with intuitive user interfaces",
-              "Boost visibility through SEO-optimized structure",
-              "Ensure lightning-fast performance and mobile responsiveness",
-              "Build a future-ready platform with modern frameworks"
-            ]
-          }}
-        />
-
-        {/* Service 6 - System Integration Services */}
-        <ExpandableCyberCard
-          icon="fas fa-plug"
-          title="System Integration Services"
-          description="Unify your digital tools with seamless integrations that optimize workflows and eliminate data silos."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=7&orientation=landscape&flag=171e3f95943df0363f525e7bc5220049"
-          imageAlt="System Integration Services"
-          expandedContent={{
-            whatWeOffer: [
-              "Integration between CRMs, ERPs, marketing, and support tools",
-              "Custom workflows using n8n, Zapier, or direct APIs",
-              "Real-time sync of leads, inventory, invoices, and tickets",
-              "Authentication and permission-aware connections",
-              "Monitoring, error-handling, and failover setup"
-            ],
-            keyBenefits: [
-              "Eliminate manual data entry and reduce human error",
-              "Improve visibility across departments and platforms",
-              "Automate repetitive business processes",
-              "Speed up decision-making with live data sync",
-              "Future-proof your stack with flexible, modular integrations"
-            ]
-          }}
-        />
-      </div>
-
-      {/* Mobile Cards - Hidden on Desktop */}
-      <div className="md:hidden grid grid-cols-1 gap-6 max-w-md mx-auto">
-        {/* Mobile Service 1 - AI Automation */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-robot"
-          title="AI Automation"
-          description="Transform your business processes with intelligent automation powered by cutting-edge AI technology."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=2&orientation=landscape&flag=9d6156f18624d1acd2b159095980055c"
-          imageAlt="AI Automation"
-          expandedContent={{
-            whatWeOffer: [
-              "n8n workflow automation and integration",
-              "Large Language Model (LLM) integration",
-              "Custom AI-powered process automation",
-              "Intelligent document processing",
-              "Automated decision-making systems"
-            ],
-            keyBenefits: [
-              "Reduce manual work by up to 80%",
-              "Eliminate human errors",
-              "24/7 automated operations",
-              "Scale operations without adding headcount"
-            ]
-          }}
-        />
-
-        {/* Mobile Service 2 - CRM Systems */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-users-cog"
-          title="CRM Systems"
-          description="Streamline your customer relationships with world-class CRM implementations tailored to your business."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=3&orientation=landscape&flag=2cb6d86ff897e5fd0760f2bb64071180"
-          imageAlt="CRM Systems"
-          expandedContent={{
-            whatWeOffer: [
-              "Zoho CRM implementation and customization",
-              "HubSpot setup and optimization",
-              "Salesforce configuration and integration",
-              "GoHighLevel deployment and training",
-              "Custom CRM workflow automation"
-            ],
-            keyBenefits: [
-              "Centralized customer data management",
-              "Improved sales team productivity",
-              "Enhanced customer insights",
-              "Automated marketing campaigns"
-            ]
-          }}
-        />
-
-        {/* Mobile Service 3 - ERP Solutions */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-cogs"
-          title="ERP Solutions"
-          description="Unify your business operations with comprehensive ERP solutions that grow with your organization."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=4&orientation=landscape&flag=32400648ca9eb4e3410e77f9a887adc3"
-          imageAlt="ERP Solutions"
-          expandedContent={{
-            whatWeOffer: [
-              "Odoo implementation and customization",
-              "Module configuration and integration",
-              "Custom module development",
-              "Data migration and system setup",
-              "Training and ongoing support"
-            ],
-            keyBenefits: [
-              "Integrated business processes",
-              "Real-time operational visibility",
-              "Reduced operational costs",
-              "Improved decision-making"
-            ]
-          }}
-        />
-
-        {/* Mobile Service 4 - MSP Services */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-shield-alt"
-          title="MSP Services"
-          description="Comprehensive managed services to keep your technology infrastructure secure, compliant, and optimized."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=5&orientation=landscape&flag=e9e14e44cde36bfd208d4d42c3010660"
-          imageAlt="MSP Services"
-          expandedContent={{
-            whatWeOffer: [
-              "AI compliance and governance",
-              "Security audits and assessments",
-              "Network management and monitoring",
-              "Cloud infrastructure management",
-              "Disaster recovery planning"
-            ],
-            keyBenefits: [
-              "Proactive issue prevention",
-              "Enhanced security posture",
-              "Regulatory compliance assurance",
-              "Predictable IT costs"
-            ]
-          }}
-        />
-
-        {/* Mobile Service 5 - Web Design & Development */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-laptop-code"
-          title="Web Design & Development"
-          description="Elevate your online presence with custom websites designed for performance, clarity, and conversion."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=6&orientation=landscape&flag=4d41045a3fca1ac8f8cc59c4d3bf6ed5"
-          imageAlt="Web Design & Development"
-          expandedContent={{
-            whatWeOffer: [
-              "Custom-designed websites tailored to your business goals",
-              "Development with React, Next.js, or Webflow",
-              "UI/UX prototyping and user-centered design systems",
-              "Fully responsive layouts across all screen sizes",
-              "Optimization for SEO, accessibility, and performance"
-            ],
-            keyBenefits: [
-              "Establish a strong digital presence with premium design",
-              "Improve engagement with intuitive user interfaces",
-              "Boost visibility through SEO-optimized structure",
-              "Ensure lightning-fast performance and mobile responsiveness",
-              "Build a future-ready platform with modern frameworks"
-            ]
-          }}
-        />
-
-        {/* Mobile Service 6 - System Integration Services */}
-        <ExpandableMobileServiceCard
-          icon="fas fa-plug"
-          title="System Integration Services"
-          description="Unify your digital tools with seamless integrations that optimize workflows and eliminate data silos."
-          imageUrl="https://readdy.ai/api/search-image?width=600&height=400&seq=7&orientation=landscape&flag=171e3f95943df0363f525e7bc5220049"
-          imageAlt="System Integration Services"
-          expandedContent={{
-            whatWeOffer: [
-              "Integration between CRMs, ERPs, marketing, and support tools",
-              "Custom workflows using n8n, Zapier, or direct APIs",
-              "Real-time sync of leads, inventory, invoices, and tickets",
-              "Authentication and permission-aware connections",
-              "Monitoring, error-handling, and failover setup"
-            ],
-            keyBenefits: [
-              "Eliminate manual data entry and reduce human error",
-              "Improve visibility across departments and platforms",
-              "Automate repetitive business processes",
-              "Speed up decision-making with live data sync",
-              "Future-proof your stack with flexible, modular integrations"
-            ]
-          }}
-        />
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Services;
