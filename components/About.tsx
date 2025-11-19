@@ -1,48 +1,84 @@
 import React from 'react';
 import { Button } from "./ui/button";
 
+const About: React.FC = () => {
+  return (
+    <section id="about" className="py-12 md:py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="mb-6 md:mb-12 border-b border-gray-200 pb-4">
+          <span className="text-sm md:text-base font-mono text-gray-500 uppercase tracking-widest">About Us</span>
+        </div>
 
-const About: React.FC = () => (
-  <section id="about" className="py-20">
-    <div className="container mx-auto px-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="order-2 lg:order-1">
-          <h2 className="text-4xl font-bold mb-6">About Corvus Labs</h2>
-          <p className="text-lg text-gray-600 mb-6">Founded in 2015, Corvus Labs has established itself as a premier consulting firm, delivering innovative solutions to complex business challenges across industries.</p>
-          <p className="text-lg text-gray-600 mb-6">Our team of expert consultants combines deep industry knowledge with cutting-edge methodologies to drive transformative results for our clients.</p>
-          <p className="text-lg text-gray-600 mb-8">We believe in building lasting partnerships based on trust, integrity, and a shared commitment to excellence.</p>
-          <div className="grid grid-cols-2 gap-8 mb-8">
-            <div>
-              <h3 className="text-5xl font-bold text-black mb-2">250+</h3>
-              <p className="text-gray-600">Clients Worldwide</p>
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 md:mb-12 tracking-tight text-black leading-tight">About Corvus Labs</h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 border-t border-gray-100 pt-8 md:pt-12 relative">
+          {/* Vertical grid line decoration - hidden on mobile */}
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-100"></div>
+
+          {/* Left Text Column */}
+          <div className="lg:col-span-5 space-y-6 md:space-y-8">
+            <p className="text-lg md:text-xl font-light leading-relaxed text-gray-800">
+              CorvusLabs is a modern IT and automation solutions provider helping small businesses and startups operate smarter and scale faster.
+            </p>
+            <div className="flex flex-wrap gap-2 md:gap-3">
+              {["AI Automation", "Odoo ERP", "GoHighLevel", "System Integration", "Web Experience"].map((tag) => (
+                <span key={tag} className="px-3 py-1 md:px-4 md:py-1 border border-black rounded-full text-xs md:text-sm font-medium hover:bg-black hover:text-white transition-colors cursor-default">
+                  {tag}
+                </span>
+              ))}
             </div>
-            <div>
-              <h3 className="text-5xl font-bold text-black mb-2">95%</h3>
-              <p className="text-gray-600">Client Satisfaction</p>
-            </div>
-            <div>
-              <h3 className="text-5xl font-bold text-black mb-2">120+</h3>
-              <p className="text-gray-600">Expert Consultants</p>
-            </div>
-            <div>
-              <h3 className="text-5xl font-bold text-black mb-2">15+</h3>
-              <p className="text-gray-600">Industry Awards</p>
+            <div className="pt-4 md:pt-8">
+              <Button className="bg-black hover:bg-gray-800 text-white px-6 py-4 md:px-8 md:py-6 text-base md:text-lg !rounded-button whitespace-nowrap w-full md:w-auto">
+                Our Approach <i className="fas fa-arrow-right ml-2"></i>
+              </Button>
             </div>
           </div>
-          <Button className="bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg !rounded-button whitespace-nowrap">
-            Our Approach <i className="fas fa-arrow-right ml-2"></i>
-          </Button>
+
+          {/* Right Text Column */}
+          <div className="lg:col-span-5 lg:col-start-7 space-y-6 text-gray-600 text-base md:text-lg">
+            <p>
+              Established in 2018, we specialize in building automated workflows, integrated systems, and solutions designed to reduce manual work and improve efficiency.
+            </p>
+            <p>
+              Our services support businesses across Canada, Australia, and Sri Lanka, delivering clean, reliable, technology-driven systems that simplify operations and unlock growth. At CorvusLabs, we focus on practical, results-driven solutions built for real business challenges.
+            </p>
+
+            <div className="grid grid-cols-2 gap-8 md:gap-12 pt-4 md:pt-8">
+              <div>
+                <h3 className="text-3xl md:text-4xl font-bold text-black mb-1">20+</h3>
+                <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wide">Clients Worldwide</p>
+              </div>
+              <div>
+                <h3 className="text-3xl md:text-4xl font-bold text-black mb-1">95%</h3>
+                <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wide">Client Satisfaction</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="order-1 lg:order-2 relative">
-          <img 
-            src="https://readdy.ai/api/search-image?width=700&height=800&seq=8&orientation=portrait&flag=a18992efd8eb3e22f3a303171f5c9e78" 
-            alt="Corvus Labs Office" 
-            className="w-full h-auto rounded-lg shadow-xl"
-          />
+
+        {/* Image Section - Single featured image on mobile, grid on desktop */}
+        <div className="mt-10 md:mt-20">
+          {/* Mobile: Single Featured Image */}
+          <div className="md:hidden aspect-[4/3] bg-gray-100 overflow-hidden relative group rounded-lg">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" alt="CorvusLabs Office" className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" />
+          </div>
+
+          {/* Desktop: Three Image Grid */}
+          <div className="hidden md:grid grid-cols-3 gap-8">
+            <div className="aspect-square bg-gray-100 overflow-hidden relative group">
+              <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" alt="Office" className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div className="aspect-square bg-gray-100 overflow-hidden relative group mt-12">
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" alt="Architecture" className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div className="aspect-square bg-gray-100 overflow-hidden relative group">
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800" alt="Meeting" className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default About;
