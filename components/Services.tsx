@@ -15,15 +15,15 @@ const services = [
   {
     id: 'crm',
     title: "CRM Systems",
-    description: "Centralize your customer interactions with a bespoke CRM strategy. Whether it's Salesforce, HubSpot, or a custom build, we ensure your sales and support teams have a 360-degree view of every client.",
+    description: "Centralize your customer interactions with a bespoke CRM strategy. We specialize in GoHighLevel, Salesforce, and HubSpot implementations to ensure your sales and support teams have a 360-degree view.",
     icon: Database,
     imageUrl: "/service-crm-mono.png",
-    features: ["Pipeline Management", "Automated Outreach", "Customer Insights", "Data Migration"]
+    features: ["GoHighLevel Setup", "Pipeline Management", "Automated Outreach", "Data Migration"]
   },
   {
     id: 'web',
     title: "Web Experience",
-    description: "We craft immersive, high-performance websites that blend aesthetic excellence with technical precision. From 3D interactive elements to lightning-fast load times, we define your digital brand.",
+    description: "We craft immersive, high-performance websites that blend aesthetic excellence with technical precision. Using Next.js and React, we define your digital brand with 3D interactive elements and lightning-fast load times.",
     icon: Globe,
     imageUrl: "/service-web-mono.png",
     features: ["3D WebGL Experiences", "React & Next.js", "Conversion Optimization", "Headless CMS"]
@@ -31,10 +31,10 @@ const services = [
   {
     id: 'erp',
     title: "ERP Solutions",
-    description: "Break down silos with a comprehensive ERP solution. We integrate finance, supply chain, and HR into a single source of truth, enabling real-time decision making at an enterprise scale.",
+    description: "Break down silos with a comprehensive ERP solution. As Odoo experts, we integrate finance, supply chain, and HR into a single source of truth, enabling real-time decision making at an enterprise scale.",
     icon: Layers,
     imageUrl: "/service-erp-mono.png",
-    features: ["Supply Chain Sync", "Financial Reporting", "Inventory Management", "HR Automation"]
+    features: ["Odoo Implementation", "Financial Reporting", "Inventory Management", "HR Automation"]
   },
   {
     id: 'msp',
@@ -83,10 +83,13 @@ const Services: React.FC = () => {
         ))}
       </div>
 
-      <button className="w-full group flex items-center justify-center gap-3 bg-white text-black py-4 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors">
+      <a
+        href="#contact"
+        className="w-full group flex items-center justify-center gap-3 bg-white text-black py-4 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors"
+      >
         Explore Solution
         <ArrowUpRight size={16} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-      </button>
+      </a>
     </div>
   );
 

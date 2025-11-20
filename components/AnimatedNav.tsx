@@ -13,7 +13,7 @@ const navigationItems = [
   { name: 'Home', href: '#home' },
   { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
-  { name: 'Testimonials', href: '#testimonials' },
+  { name: 'Industries', href: '#industries' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -22,7 +22,7 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'services', 'about', 'testimonials', 'contact'];
+      const sections = ['home', 'services', 'about', 'industries', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -125,9 +125,9 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({ isScrolled }) => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="md:hidden"
         >
-          <FluidNavMenu 
-            items={navigationItems.map(item => ({ 
-              label: item.name, 
+          <FluidNavMenu
+            items={navigationItems.map(item => ({
+              label: item.name,
               href: item.href,
               icon: null // Icons are handled internally
             }))}

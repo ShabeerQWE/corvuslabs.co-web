@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState } from 'react';
-import { Menu as MenuIcon, X, Home, Settings, Users, Star, Phone } from 'lucide-react';
-import { MenuItem, MenuContainer } from "./fluid-menu";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu as MenuIcon, X, Home, Settings, Users, Factory, Phone } from 'lucide-react';
 
 interface FluidNavMenuProps {
   items: Array<{ label: string; href: string }>;
@@ -10,154 +10,139 @@ interface FluidNavMenuProps {
 }
 
 export const FluidNavMenu: React.FC<FluidNavMenuProps> = ({ items, onItemClick }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  
-  // Delay visibility to prevent jump
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 150); // Slightly longer delay to ensure page is loaded
-    
-    return () => clearTimeout(timer);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const menuContainer = target.closest('[data-nav-menu]');
-      
-      if (!menuContainer && isExpanded) {
-        setIsExpanded(false);
-      }
-    };
 
-    if (isExpanded) {
-      document.addEventListener('click', handleClickOutside, true);
-      return () => document.removeEventListener('click', handleClickOutside, true);
-    }
-  }, [isExpanded]);
-  
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   const handleItemClick = (href: string) => {
-    // Always close the menu when an item is clicked (important for mobile)
-    setIsExpanded(false);
-    
-    // Add a small delay to ensure the menu closes visually before navigation
-    setTimeout(() => {
-      if (onItemClick) {
-        onItemClick(href);
-      } else {
-        // Default behavior: scroll to section
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+    setIsOpen(false);
+    if (onItemClick) {
+      setTimeout(() => onItemClick(href), 300);
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
-  };
-
-  const handleToggle = () => {
-    setIsExpanded(!isExpanded);
+    }
   };
 
   const getIcon = (label: string) => {
-    const iconClass = "text-white";
+    const iconProps = { size: 20, strokeWidth: 1.5, className: "text-white" };
     switch (label.toLowerCase()) {
-      case 'home':
-        return <Home size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'services':
-        return <Settings size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'about us':
-        return <Users size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'testimonials':
-        return <Star size={20} strokeWidth={1.5} className={iconClass} />;
-      case 'contact us':
-        return <Phone size={20} strokeWidth={1.5} className={iconClass} />;
-      default:
-        return <Home size={20} strokeWidth={1.5} className={iconClass} />;
+      case 'home': return <Home {...iconProps} />;
+      case 'services': return <Settings {...iconProps} />;
+      case 'about': return <Users {...iconProps} />;
+      case 'industries': return <Factory {...iconProps} />;
+      case 'contact': return <Phone {...iconProps} />;
+      default: return <Home {...iconProps} />;
     }
   };
 
-  return (
-    <div 
-      className="md:hidden fixed top-1 right-6 z-50" 
-      data-nav-menu
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(-10px)',
-        transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
-        pointerEvents: isVisible ? 'auto' : 'none'
-      }}
-    >
-      {/* Background blur effect */}
-      <div className="absolute inset-0 -m-4 bg-gradient-to-b from-black/5 to-transparent blur-xl rounded-full opacity-50" />
-      
-      <div className="relative w-[64px] h-auto" data-expanded={isExpanded}>
-        {/* Container for all items */}
-        <div className="relative" style={{ minHeight: isExpanded ? `${(items.length + 1) * 72}px` : '64px' }}>
-          {/* Toggle button - first item - always visible */}
-          <div 
-            className="relative w-16 h-16 bg-gray-800/60 backdrop-blur-md border border-gray-600/40 shadow-lg cursor-pointer rounded-full group will-change-transform z-50 hover:bg-gray-800/70 transition-all duration-200"
-            onClick={handleToggle}
-          >
-            <MenuItem 
-              icon={
-                <div className="relative w-6 h-6 flex items-center justify-center">
-                  <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out origin-center opacity-100 scale-100 rotate-0 [div[data-expanded=true]_&]:opacity-0 [div[data-expanded=true]_&]:scale-0 [div[data-expanded=true]_&]:rotate-180">
-                    <MenuIcon size={20} strokeWidth={1.5} className="text-white" />
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out origin-center opacity-0 scale-0 -rotate-180 [div[data-expanded=true]_&]:opacity-100 [div[data-expanded=true]_&]:scale-100 [div[data-expanded=true]_&]:rotate-0">
-                    <X size={20} strokeWidth={1.5} className="text-white" />
-                  </div>
-                </div>
-              } 
-            />
-          </div>
+  if (!isMounted) return null;
 
-          {/* Navigation items */}
-          {items.map((item, index) => (
-            <div 
-              key={item.href}
-              className="absolute top-0 left-0 will-change-transform"
-              style={{
-                transform: `translateY(${isExpanded ? (index + 1) * 72 : 0}px)`,
-                opacity: isExpanded ? 1 : 0,
-                zIndex: 40 - index,
-                transition: `transform ${isExpanded ? '300ms' : '300ms'} cubic-bezier(0.4, 0, 0.2, 1),
-                           opacity ${isExpanded ? '300ms' : '350ms'}`,
-                backfaceVisibility: 'hidden',
-                perspective: 1000,
-                WebkitFontSmoothing: 'antialiased'
+  return (
+    <div className="fixed top-4 right-4 z-50 md:hidden">
+      <motion.nav
+        initial={false}
+        animate={isOpen ? "open" : "closed"}
+        className="relative"
+      >
+        {/* Toggle Button */}
+        <motion.div
+          className="absolute top-0 right-0 w-14 h-14 bg-neutral-900/85 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] rounded-full z-50 flex items-center justify-center cursor-pointer overflow-hidden"
+          onClick={toggleMenu}
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="text-white" size={24} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <MenuIcon className="text-white" size={24} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Menu Items */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="absolute top-16 right-0 flex flex-col gap-3 items-end"
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={{
+                open: {
+                  transition: { staggerChildren: 0.07, delayChildren: 0.1 }
+                },
+                closed: {
+                  transition: { staggerChildren: 0.05, staggerDirection: -1 }
+                }
               }}
             >
-              {/* Sphere */}
-              <div className="w-16 h-16 bg-gray-800/60 backdrop-blur-md border border-gray-600/40 shadow-lg rounded-full hover:bg-gray-800/70 transition-all duration-200"
-                   style={{
-                     clipPath: index === items.length - 1 
-                       ? "circle(50% at 50% 50%)" 
-                       : "circle(50% at 50% 55%)"
-                   }}
-              >
-                <MenuItem 
-                  icon={getIcon(item.label)}
-                  onClick={() => handleItemClick(item.href)}
-                />
-              </div>
-              
-              {/* Label positioned outside the sphere */}
-              {isExpanded && (
-                <button 
-                  onClick={() => handleItemClick(item.href)}
-                  className="absolute right-[72px] top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-800/90 backdrop-blur-md border border-gray-600/40 rounded-lg shadow-lg z-50 hover:bg-gray-800/95 transition-all duration-200 cursor-pointer"
+              {items.map((item) => (
+                <motion.div
+                  key={item.label}
+                  variants={{
+                    open: { opacity: 1, x: 0, scale: 1 },
+                    closed: { opacity: 0, x: 20, scale: 0.8 }
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
                 >
-                  <span className="text-white text-sm font-medium whitespace-nowrap">
-                    {item.label}
-                  </span>
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+                  <button
+                    onClick={() => handleItemClick(item.href)}
+                    className="group relative flex items-center gap-3 bg-neutral-900/90 backdrop-blur-xl border border-white/30 px-5 py-3 rounded-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] hover:bg-neutral-800/95 transition-all overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+
+                    <span className="text-white text-sm font-semibold tracking-wide relative z-10">{item.label}</span>
+                    <div className="w-8 h-8 bg-white/15 rounded-full flex items-center justify-center relative z-10 group-hover:bg-white/25 transition-colors">
+                      {getIcon(item.label)}
+                    </div>
+                  </button>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      {/* Backdrop */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            onClick={toggleMenu}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
