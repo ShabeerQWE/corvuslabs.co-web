@@ -5,12 +5,13 @@ import LogoMarquee from './components/LogoMarquee';
 import Services from './components/Services';
 import FlipWordsDemo from './components/flip-words-demo';
 import About from './components/About';
-import Stats from './components/Stats';
+import VisionMissionVariations from './components/VisionMissionVariations';
 
 import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTopButton from './components/BackToTopButton';
+import Industries from './components/Industries';
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,7 +32,8 @@ const App: React.FC = () => {
       <Services />
       <FlipWordsDemo />
       <About />
-      <Stats />
+      <VisionMissionVariations />
+      <Industries />
 
       <CTA />
       <Contact />
